@@ -10,4 +10,9 @@ public class WaitController extends GameStateController {
 	public WaitController(GameWindow window) {
 		super(window);
 	}
+
+	@Override
+	void initializePanel(GameWindow window) {
+
+	}
 }

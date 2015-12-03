@@ -1,5 +1,6 @@
 package controller;
 
+import ui.DrawingScreenPanel;
 import ui.GameWindow;
 
 /**
@@ -11,4 +12,10 @@ public class WordDrawController extends GameStateController {
 		super(window);
 
 	}
+
+	@Override
+	void initializePanel(GameWindow window) {
+		window.replacePanel(new DrawingScreenPanel());
+	}
+
 }

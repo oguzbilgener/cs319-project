@@ -45,7 +45,7 @@ public class GameWindow extends JFrame {
 		replacePanel(new CreditsPanel());
 	}
 
-	protected void replacePanel(Component component) {
+	public void replacePanel(Component component) {
 		getContentPane().removeAll();
 		getContentPane().add(component);
 		revalidate();

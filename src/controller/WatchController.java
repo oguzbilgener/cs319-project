@@ -10,4 +10,9 @@ public class WatchController extends GameStateController {
 	public WatchController(GameWindow window) {
 		super(window);
 	}
+
+	@Override
+	void initializePanel(GameWindow window) {
+
+	}
 }
