@@ -1,5 +1,5 @@
 
-package drawItGUI;
+package ui;
 
 /**
  *
