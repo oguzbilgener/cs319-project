@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.istack.internal.Nullable;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ui.GameWindow;
 import ui.event.MenuEvent;
@@ -12,6 +13,8 @@ import javax.swing.*;
 public class GameController {
 
 	private GameWindow window;
+	@Nullable
+	private BaseController activeController;
 
 	public void createAndShowGUI() {
 		//Create and set up the window.
