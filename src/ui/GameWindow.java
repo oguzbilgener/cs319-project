@@ -11,13 +11,13 @@ import javax.swing.JScrollPane;
  *
  * @author Görkem Çamlı
  */
-public class MainFrame extends javax.swing.JFrame {
+public class GameWindow extends javax.swing.JFrame {
     JPanel mainPanel; 
     CreditsPanel crePan;
     /**
-     * Creates new form MainFrame
+     * Creates new form GameWindow
      */
-    public MainFrame() {
+    public GameWindow() {
         initComp();
     }
 
