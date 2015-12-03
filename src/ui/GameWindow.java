@@ -8,59 +8,55 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 /**
- *
  * @author Görkem Çamlı
  */
 public class GameWindow extends javax.swing.JFrame {
-    JPanel mainPanel; 
-    CreditsPanel crePan;
-    /**
-     * Creates new form GameWindow
-     */
-    public GameWindow() {
-        initComp();
-    }
+	JPanel mainPanel;
+	CreditsPanel crePan;
 
-    private void initComp()
-    {
-            setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-              getContentPane().setLayout(new BorderLayout(0, 0));
-			
-			mainPanel= new JPanel();
-                        
-                        MainMenuPanel menuPanel= new MainMenuPanel();
-                        mainPanel.add(menuPanel);
-                        
-                        
-                        
-                        CreditsPanel credPanel = new CreditsPanel();
-			
+	/**
+	 * Creates new form GameWindow
+	 */
+	public GameWindow() {
+		initComp();
+	}
 
-                              
-			
-                       JScrollPane scroller = new JScrollPane(mainPanel);
-                       this.getContentPane().add(scroller, BorderLayout.CENTER);
-                                      
-                        setVisible(true);  
-    }
-   
-    @SuppressWarnings("unchecked")
-    private void initComponents() {
+	private void initComp() {
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		getContentPane().setLayout(new BorderLayout(0, 0));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		mainPanel = new JPanel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 775, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 495, Short.MAX_VALUE)
-        );
+		MainMenuPanel menuPanel = new MainMenuPanel();
+		mainPanel.add(menuPanel);
 
-        pack();
-    }
+
+		CreditsPanel credPanel = new CreditsPanel();
+
+
+		JScrollPane scroller = new JScrollPane(mainPanel);
+		this.getContentPane().add(scroller, BorderLayout.CENTER);
+
+		setVisible(true);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void initComponents() {
+
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(
+				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGap(0, 775, Short.MAX_VALUE)
+		);
+		layout.setVerticalGroup(
+				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGap(0, 495, Short.MAX_VALUE)
+		);
+
+		pack();
+	}
 
 }
