@@ -1,11 +1,12 @@
 package controller;
 
 import ui.GameWindow;
+import ui.event.MenuEvent;
 
 import javax.swing.*;
 
 /**
- * Created by oguzb on 03/12/15.
+ * @author oguzb
  */
 public class GameController {
 
@@ -19,5 +20,24 @@ public class GameController {
 		//Display the window.
 		frame.pack();
 		frame.setVisible(true);
+
+		frame.setMenuEventListeners(itemType -> {
+			switch(itemType) {
+				case host:
+					System.out.println("host clicked");
+					break;
+				case join:
+					System.out.println("join clicked");
+					break;
+				case credits:
+					System.out.println("credits clicked");
+					break;
+				case login:
+					System.out.println("login clicked");
+					break;
+				case logout:
+					System.out.println("logout clicked");
+			}
+		});
 	}
 }

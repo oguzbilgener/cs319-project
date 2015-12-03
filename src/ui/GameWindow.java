@@ -1,9 +1,9 @@
 
 package ui;
 
+import ui.event.MenuEvent;
+
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -11,7 +11,8 @@ import javax.swing.JScrollPane;
  * @author Görkem Çamlı
  */
 public class GameWindow extends javax.swing.JFrame {
-	JPanel mainPanel;
+
+	MainMenuPanel menuPanel;
 	CreditsPanel crePan;
 
 	/**
@@ -25,19 +26,23 @@ public class GameWindow extends javax.swing.JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
-		mainPanel = new JPanel();
+		JPanel wrapper;
 
-		MainMenuPanel menuPanel = new MainMenuPanel();
-		mainPanel.add(menuPanel);
+		wrapper = new JPanel();
 
+		menuPanel = new MainMenuPanel();
+		wrapper.add(menuPanel);
 
 		CreditsPanel credPanel = new CreditsPanel();
 
-
-		JScrollPane scroller = new JScrollPane(mainPanel);
+		JScrollPane scroller = new JScrollPane(wrapper);
 		this.getContentPane().add(scroller, BorderLayout.CENTER);
 
 		setVisible(true);
+	}
+
+	public void setMenuEventListeners(MenuEvent.Listener listener) {
+		menuPanel.setMenuEventListeners(listener);
 	}
 
 	@SuppressWarnings("unchecked")
