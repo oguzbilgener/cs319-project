@@ -3,65 +3,52 @@ package ui;
 
 import ui.event.MenuEvent;
 
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import java.awt.*;
+import javax.swing.*;
 
 /**
  * @author Görkem Çamlı
  */
-public class GameWindow extends javax.swing.JFrame {
+public class GameWindow extends JFrame {
 
-	MainMenuPanel menuPanel;
-	CreditsPanel crePan;
+	final int WIDTH = 480;
+	final int HEIGHT = 576;
 
 	/**
 	 * Creates new form GameWindow
 	 */
 	public GameWindow() {
-		initComp();
-	}
-
-	private void initComp() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		getContentPane().setLayout(new BorderLayout(0, 0));
-
-		JPanel wrapper;
-
-		wrapper = new JPanel();
-
-		menuPanel = new MainMenuPanel();
-		wrapper.add(menuPanel);
-
-		CreditsPanel credPanel = new CreditsPanel();
-
-		JScrollPane scroller = new JScrollPane(wrapper);
-		this.getContentPane().add(scroller, BorderLayout.CENTER);
+		getContentPane().setLayout(new BorderLayout(WIDTH, HEIGHT));
+		Dimension size = new Dimension(WIDTH, HEIGHT);
+		setSize(size);
+		setMinimumSize(size);
 
 		setVisible(true);
 	}
 
-	public void setMenuEventListeners(MenuEvent.Listener listener) {
+	public void showMainMenu(MenuEvent.Listener listener) {
+		MainMenuPanel menuPanel = new MainMenuPanel();
+		replacePanel(menuPanel);
 		menuPanel.setMenuEventListeners(listener);
 	}
 
-	@SuppressWarnings("unchecked")
-	private void initComponents() {
+	public void showHostPanel() {
+		replacePanel(new HostPanel());
+	}
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+	public void showJoinPanel() {
+		replacePanel(new JoinPanel());
+	}
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(
-				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGap(0, 775, Short.MAX_VALUE)
-		);
-		layout.setVerticalGroup(
-				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGap(0, 495, Short.MAX_VALUE)
-		);
+	public void showCreditsPanel() {
+		replacePanel(new CreditsPanel());
+	}
 
-		pack();
+	protected void replacePanel(Component component) {
+		getContentPane().removeAll();
+		getContentPane().add(component);
+		revalidate();
 	}
 
 }

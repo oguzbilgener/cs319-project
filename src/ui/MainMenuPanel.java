@@ -111,29 +111,13 @@ public class MainMenuPanel extends JPanel {
     }
 
     public void setMenuEventListeners(MenuEvent.Listener listener) {
-        hostGameButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                listener.onMenuEvent(MenuEvent.ItemType.host);
-            }
-        });
+        hostGameButton.addActionListener(event -> listener.onMenuEvent(MenuEvent.ItemType.host));
 
-        joinGameBut.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                listener.onMenuEvent(MenuEvent.ItemType.join);
-            }
-        });
+        joinGameBut.addActionListener(event -> listener.onMenuEvent(MenuEvent.ItemType.join));
 
-        creditsBut.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                listener.onMenuEvent(MenuEvent.ItemType.credits);
-            }
-        });
+        creditsBut.addActionListener(event -> listener.onMenuEvent(MenuEvent.ItemType.credits));
 
-        logoutBut.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                listener.onMenuEvent(MenuEvent.ItemType.logout);
-            }
-        });
+        logoutBut.addActionListener(event -> listener.onMenuEvent(MenuEvent.ItemType.logout));
 
     }
 

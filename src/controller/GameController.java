@@ -1,5 +1,6 @@
 package controller;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ui.GameWindow;
 import ui.event.MenuEvent;
 
@@ -10,34 +11,49 @@ import javax.swing.*;
  */
 public class GameController {
 
-	public static void createAndShowGUI() {
+	private GameWindow window;
+
+	public void createAndShowGUI() {
 		//Create and set up the window.
-		GameWindow frame = new GameWindow();
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.setTitle("Draw It!");
+		window = new GameWindow();
+		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		window.setTitle("Draw It!");
 
-		frame.getContentPane();
+		window.getContentPane();
 		//Display the window.
-		frame.pack();
-		frame.setVisible(true);
+		window.pack();
+		window.setVisible(true);
 
-		frame.setMenuEventListeners(itemType -> {
-			switch(itemType) {
+		MenuEvent.Listener menuListener = itemType -> {
+			switch (itemType) {
 				case host:
-					System.out.println("host clicked");
+					showHostScreen();
 					break;
 				case join:
-					System.out.println("join clicked");
+					showJoinScreen();
 					break;
 				case credits:
-					System.out.println("credits clicked");
+					showCreditsScreen();
 					break;
 				case login:
-					System.out.println("login clicked");
-					break;
+					throw new NotImplementedException();
 				case logout:
-					System.out.println("logout clicked");
+					throw new NotImplementedException();
 			}
-		});
+		};
+
+		window.showMainMenu(menuListener);
+	}
+
+	private void showHostScreen() {
+		window.showHostPanel();
+	}
+
+	private void showJoinScreen() {
+		window.showJoinPanel();
+	}
+
+	private void showCreditsScreen() {
+		window.showCreditsPanel();
 	}
 }
