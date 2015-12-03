@@ -19,7 +19,7 @@ public class GameController implements Observer {
 	private GameWindow window;
 
 	@Nullable private GameSession session;
-	@Nullable private BaseController activeController;
+	@Nullable private GameStateController activeController;
 
 	public void createAndShowGUI() {
 		//Create and set up the window.
