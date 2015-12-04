@@ -26,6 +26,7 @@ public class GameWindow extends JFrame {
 		Dimension size = new Dimension(WIDTH, HEIGHT);
 		setSize(size);
 		setMinimumSize(size);
+		setMaximumSize(size);
 
 		setVisible(true);
 	}
