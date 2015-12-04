@@ -1,7 +1,8 @@
 package controller;
 
-import ui.DrawingScreenPanel;
+import ui.GameStatePanel;
 import ui.GameWindow;
+import ui.play.WordDrawPanel;
 
 /**
  * Created by oguzb on 03/12/15.
@@ -14,8 +15,8 @@ public class WordDrawController extends GameStateController {
 	}
 
 	@Override
-	void initializePanel(GameWindow window) {
-		window.replacePanel(new DrawingScreenPanel());
+	GameStatePanel initializePanel() {
+		return new WordDrawPanel();
 	}
 
 }

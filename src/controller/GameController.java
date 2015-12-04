@@ -80,14 +80,19 @@ public class GameController implements Observer {
 				switch(session.getRoundState()) {
 					case DRAW:
 						activeController = new WordDrawController(window);
+						break;
 					case WATCH:
 						activeController = new WatchController(window);
+						break;
 					case GUESS:
 						activeController = new GuessWordController(window);
+						break;
 					case WAIT:
 						activeController = new WaitController(window);
+						break;
 					case STATS:
 						activeController = new StatsController(window);
+						break;
 				}
 
 			}

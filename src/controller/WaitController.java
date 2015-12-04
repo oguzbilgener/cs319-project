@@ -1,5 +1,6 @@
 package controller;
 
+import ui.GameStatePanel;
 import ui.GameWindow;
 
 /**
@@ -12,7 +13,7 @@ public class WaitController extends GameStateController {
 	}
 
 	@Override
-	void initializePanel(GameWindow window) {
-
+	GameStatePanel initializePanel() {
+		return null;
 	}
 }

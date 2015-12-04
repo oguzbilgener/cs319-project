@@ -5,7 +5,7 @@ package ui;
  *
  * @author Görkem Çamlı
  */
-public class ChooseWordPanel extends javax.swing.JPanel {
+public class ChooseWordPanel extends GameStatePanel {
 
         // Variables declaration 
     private javax.swing.JLabel chooseWordLabel;

@@ -1,5 +1,6 @@
 package controller;
 
+import ui.GameStatePanel;
 import ui.GameWindow;
 
 /**
@@ -8,8 +9,9 @@ import ui.GameWindow;
 public abstract class GameStateController {
 
 	public GameStateController(GameWindow window) {
-		initializePanel(window);
+		GameStatePanel panel = initializePanel();
+		window.replacePanel(panel);
 	}
 
-	abstract void initializePanel(GameWindow window);
+	abstract GameStatePanel initializePanel();
 }

@@ -1,5 +1,5 @@
 
-package ui;
+package ui.gen;
 
 /**
  * @author Görkem Çamlı

@@ -5,6 +5,9 @@ import javax.swing.*;
 /**
  * @author oguzb
  */
-public class GameStatePanel extends JPanel {
+public abstract class GameStatePanel extends JPanel {
+
+
+
 
 }

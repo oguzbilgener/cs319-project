@@ -2,6 +2,9 @@
 package ui;
 
 import ui.event.MenuEvent;
+import ui.gen.CreditsPanel;
+import ui.gen.HostPanel;
+import ui.gen.JoinPanel;
 
 import java.awt.*;
 import javax.swing.*;

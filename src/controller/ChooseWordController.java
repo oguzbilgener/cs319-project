@@ -1,7 +1,7 @@
 package controller;
 
 import ui.ChooseWordPanel;
-import ui.DrawingScreenPanel;
+import ui.GameStatePanel;
 import ui.GameWindow;
 
 /**
@@ -14,7 +14,7 @@ public class ChooseWordController extends GameStateController {
 	}
 
 	@Override
-	void initializePanel(GameWindow window) {
-		window.replacePanel(new ChooseWordPanel());
+	GameStatePanel initializePanel() {
+		return new ChooseWordPanel();
 	}
 }
