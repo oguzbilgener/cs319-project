@@ -11,12 +11,11 @@ public class WordDrawController extends GameStateController {
 
 	public WordDrawController(GameWindow window) {
 		super(window);
-
 	}
 
 	@Override
 	GameStatePanel initializePanel() {
-		return new WordDrawPanel();
+		return new WordDrawPanel(GameController.mainWindow().getContentSize());
 	}
 
 }

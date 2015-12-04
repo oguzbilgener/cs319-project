@@ -1,6 +1,8 @@
 
 package ui;
 
+import java.awt.*;
+
 /**
  *
  * @author Görkem Çamlı
@@ -16,7 +18,8 @@ public class ChooseWordPanel extends GameStatePanel {
     /**
      * Creates new form ChooseWordPanel
      */
-    public ChooseWordPanel() {
+    public ChooseWordPanel(Dimension size) {
+        super(size);
         initComponents();
     }
 

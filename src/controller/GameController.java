@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 import model.GameSession;
 import model.Player;
@@ -16,7 +17,9 @@ import java.util.Observer;
  */
 public class GameController implements Observer {
 
-	private GameWindow window;
+	protected GameWindow window;
+	// Used by static mainWindow() method. See below for the purpose
+	@NotNull private static GameWindow staticWindowInstance;
 
 	@Nullable private GameSession session;
 	@Nullable private GameStateController activeController;
@@ -24,12 +27,14 @@ public class GameController implements Observer {
 	public void createAndShowGUI() {
 		//Create and set up the window.
 		window = new GameWindow();
+		staticWindowInstance = window;
 		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		window.setTitle("Draw It!");
 
 		window.getContentPane();
 		//Display the window.
 		window.pack();
+		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 
 		MenuEvent.Listener menuListener = itemType -> {
@@ -97,5 +102,19 @@ public class GameController implements Observer {
 
 			}
 		}
+	}
+
+	/**
+	 * Allows the window instance to be accessed from anywhere of the code
+	 * Useful when you want to access the window object from any method of
+	 * child controllers but you don't want to keep a reference to GameWindow.
+	 * Similar to how the window object can be accessed from any context
+	 * in iOS development (Swift):
+	 * `UIApplication.sharedApplication().delegate.window`
+	 * @return the main window object of the application
+	 */
+	@NotNull
+	public static GameWindow mainWindow() {
+		return staticWindowInstance;
 	}
 }

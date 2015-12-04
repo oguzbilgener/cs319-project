@@ -1,5 +1,4 @@
 import controller.GameController;
-import ui.GameWindow;
 
 public class App {
 
@@ -10,6 +9,5 @@ public class App {
 		javax.swing.SwingUtilities.invokeLater(() -> controller.createAndShowGUI());
 
 	}
-
 
 }

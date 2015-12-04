@@ -55,4 +55,8 @@ public class GameWindow extends JFrame {
 		revalidate();
 	}
 
+	public Dimension getContentSize() {
+		return new Dimension(WIDTH, HEIGHT);
+	}
+
 }
