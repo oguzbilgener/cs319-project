@@ -22,6 +22,8 @@ public class GameSession extends Observable {
 	protected RoundState roundState;
 	protected Color color;
 	protected int brushSize;
+	protected String chosenWord;
+	protected String[] wordList;
 
 	public GameSession(Player myPlayer, Player otherPlayer, boolean isMyPlayerActive) {
 		this.myPlayer = myPlayer;
@@ -31,6 +33,9 @@ public class GameSession extends Observable {
 		this.roundState = isMyPlayerActive ? RoundState.DRAW : RoundState.WATCH;
 		this.color = ColorSwatch.create(1, new Dimension(0,0)).getColor(); // Default color is black
 		this.brushSize = BrushButton.create(0, new Dimension(0,0)).getBrushSize(); // Default brush is the smallest.
+        this.wordList = new String[]{"oguz","cem","gorkem"};
+        this.chosenWord=null;
+
 	}
 
 	public Player getMyPlayer() {
@@ -110,12 +115,33 @@ public class GameSession extends Observable {
 		notifyObservers(new Field(Field.Name.BRUSH_SIZE, brushSize));
 	}
 
+	public String getChosenWord() {
+		return chosenWord;
+	}
+
+	public void setChosenWord(String chosenWord) {
+		this.chosenWord = chosenWord;
+		setChanged();
+		notifyObservers(new Field(Field.Name.CHOSEN_WORD,chosenWord));
+	}
+
+	public String[] getWordList() {
+		return wordList;
+	}
+
+	public void setWordList(String[] wordList) {
+		this.wordList = wordList;
+		setChanged();
+		notifyObservers(new Field(Field.Name.WORD_LIST, wordList));
+	}
+
 	public static class Field {
 		public Name name;
 		public Object object;
 
 		public enum Name {
-			MY_PLAYER, OTHER_PLAYER, MY_PLAYER_IS_ACTIVE, ROUND_NUMBER, ROUND_STATE, COLOR, BRUSH_SIZE
+			MY_PLAYER, OTHER_PLAYER, MY_PLAYER_IS_ACTIVE, ROUND_NUMBER, ROUND_STATE, COLOR, BRUSH_SIZE,
+			CHOSEN_WORD, WORD_LIST;
 		}
 
 		public Field(Name name, Object object) {

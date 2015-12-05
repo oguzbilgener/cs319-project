@@ -1,6 +1,10 @@
 
 package ui.gen;
 
+import ui.GameStatePanel;
+
+import java.awt.*;
+
 /**
  *
  * @author Görkem Çamlı
@@ -18,7 +22,8 @@ public class SignInPanel extends GameStatePanel {
     /**
      * Creates new form SignInPanel
      */
-    public SignInPanel() {
+    public SignInPanel(Dimension size) {
+        super(size);
         initComponents();
     }
 

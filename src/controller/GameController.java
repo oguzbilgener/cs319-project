@@ -41,7 +41,8 @@ public class GameController implements Observer {
 			switch (itemType) {
 				case host:
 //					showHostScreen();
-					startNewGame();
+					// startNewGame();
+					chooseWord();
 					break;
 				case join:
 					showJoinScreen();
@@ -71,10 +72,27 @@ public class GameController implements Observer {
 		window.showCreditsPanel();
 	}
 
+	private void chooseWord() {
+		/// TODO: move these two lines to somewhere else
+		session = new GameSession(new Player(), new Player(), true);
+		session.addObserver(this);
+		///
+		session.setRoundState(GameSession.RoundState.CHOOSE_WORD);
+	}
+
 	private void startNewGame() {
 		session = new GameSession(new Player(), new Player(), true);
 		session.addObserver(this);
 		session.setRoundState(GameSession.RoundState.DRAW);
+	}
+
+	private void beginDrawOrWatch() {
+		if(session.isMyPlayerIsActive()) {
+			session.setRoundState(GameSession.RoundState.DRAW);
+		}
+		else {
+			session.setRoundState(GameSession.RoundState.WATCH);
+		}
 	}
 
 	@Override
@@ -100,7 +118,13 @@ public class GameController implements Observer {
 						case STATS:
 							activeController = new StatsController(window);
 							break;
+						case CHOOSE_WORD:
+							activeController = new ChooseWordController(window);
+							break;
 					}
+				}
+				else if(field.name == GameSession.Field.Name.CHOSEN_WORD) {
+					beginDrawOrWatch();
 				}
 			}
 		}

@@ -1,6 +1,10 @@
 
 package ui.gen;
 
+import ui.GameStatePanel;
+
+import java.awt.*;
+
 /**
  *
  * @author Görkem Çamlı
@@ -18,7 +22,8 @@ public class JoinPanel extends GameStatePanel {
     /**
      * Creates new form GuessBoxPanel
      */
-    public JoinPanel() {
+    public JoinPanel(Dimension size) {
+        super(size);
         initComponents();
     }
 
@@ -78,7 +83,7 @@ public class JoinPanel extends GameStatePanel {
                 .addContainerGap(176, Short.MAX_VALUE))
         );
     }
-    private void enterNameTextActionPerformed(java.awt.event.ActionEvent evt) {/
-    }/
+    private void enterNameTextActionPerformed(java.awt.event.ActionEvent evt) {
+    }
 
 }

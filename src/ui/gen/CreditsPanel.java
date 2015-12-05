@@ -1,6 +1,10 @@
 
 package ui.gen;
 
+import ui.GameStatePanel;
+
+import java.awt.*;
+
 /**
  *
  * @author Görkem Çamlı
@@ -18,7 +22,8 @@ public class CreditsPanel extends GameStatePanel {
     /**
      * Creates new form CreditsPAnel
      */
-    public CreditsPanel() {
+    public CreditsPanel(Dimension size) {
+        super(size);
         initComponents();
     }
 
