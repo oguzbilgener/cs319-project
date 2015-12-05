@@ -66,6 +66,7 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 				Color color = GameController.game().getSession().getColor();
 				int   size  = GameController.game().getSession().getBrushSize();
 				currentPiece = new Piece(color, size);
+				currentPiece.setStartTime(System.currentTimeMillis());
 			}
 			Point point = new Point(e.getX(), e.getY());
 			currentPiece.addPoint(point);
@@ -75,6 +76,7 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 
 	public void commitCurrentPieceDrawing() {
 		if(currentPiece != null && isInteractionAllowed()) {
+			currentPiece.setEndTime(System.currentTimeMillis());
 			addPiece(currentPiece);
 			currentPiece = null;
 			// TODO: trigger new piece creation event at `DrawingCanvas`

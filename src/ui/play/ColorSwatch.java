@@ -1,7 +1,5 @@
 package ui.play;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,7 +11,7 @@ public class ColorSwatch extends JPanel {
 	protected Color color;
 	protected String name;
 
-	protected ColorSwatch(Color color, String name) {
+	protected ColorSwatch(Dimension size, Color color, String name) {
 		this.color = color;
 		this.name = name;
 	}
@@ -34,15 +32,15 @@ public class ColorSwatch extends JPanel {
 	 * @param index the color index, currently between 0 and 19.
 	 * @return a new ColorSwatch instance with Color and name
 	 */
-	public static ColorSwatch create(int index) {
+	public static ColorSwatch create(int index, Dimension size) {
 		switch (index) {
 			case 0:
-				return new ColorSwatch(Color.decode("#FFFFFF"), "White");
+				return new ColorSwatch(size, Color.decode("#FFFFFF"), "White");
 			case 1:
-				return new ColorSwatch(Color.decode("#000000"), "Black");
+				return new ColorSwatch(size, Color.decode("#000000"), "Black");
 			// TODO: Define the rest of the colors
 			default:
-				return new ColorSwatch(Color.decode("#000000"), "");
+				return new ColorSwatch(size, Color.decode("#000000"), "");
 		}
 	}
 }

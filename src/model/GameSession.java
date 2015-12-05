@@ -29,8 +29,8 @@ public class GameSession extends Observable {
 		this.myPlayerIsActive = isMyPlayerActive;
 		this.roundNumber = 1;
 		this.roundState = isMyPlayerActive ? RoundState.DRAW : RoundState.WATCH;
-		this.color = ColorSwatch.create(1).getColor(); // Default color is black
-		this.brushSize = BrushButton.create(0).getBrushSize(); // Default brush is the smallest.
+		this.color = ColorSwatch.create(1, new Dimension(0,0)).getColor(); // Default color is black
+		this.brushSize = BrushButton.create(0, new Dimension(0,0)).getBrushSize(); // Default brush is the smallest.
 	}
 
 	public Player getMyPlayer() {

@@ -10,16 +10,32 @@ import java.awt.event.MouseListener;
  */
 public abstract class SelectorPanel extends JPanel implements MouseListener {
 
-	private JPanel[] panels;
+	private Dimension panelSize;
 
 	public SelectorPanel(Dimension panelSize) {
-		// TODO: create a table with predefined matrix dimensions, place each item into cells.
-		// TODO: also listen for clicks and delegate to onItemClicked
+		this.panelSize = panelSize;
+	}
+
+	protected void placeItems() {
+		setLayout(null);
+		// TODO: iterate over all items over 2 dimension,
+		// - use getMatrixDimensions()
+		// - use getItem()
+		// - use getSize()
+	}
+
+	protected boolean isInteractionAllowed() {
+		return true;
 	}
 
 	protected abstract Dimension getMatrixDimensions();
 
 	protected abstract JPanel getItem(int position);
+
+	protected Dimension getItemSize() {
+		return new Dimension(panelSize.width / getMatrixDimensions().width,
+				panelSize.height / getMatrixDimensions().height);
+	}
 
 	// We don't need the following events:
 

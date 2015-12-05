@@ -1,7 +1,5 @@
 package ui.play;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,45 +8,45 @@ import java.awt.*;
  */
 public class BrushButton extends JPanel {
 
-	protected int size;
+	protected int brushSize;
 
-	private BrushButton(int size) {
-		this.size = size;
+	private BrushButton(Dimension size, int brushSize) {
+		this.brushSize = brushSize;
 	}
 
 	public int getBrushSize() {
-		return size;
+		return brushSize;
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.gray);
-		// TODO: draw a circle with a radius proportional to the parameter `size`
+		// TODO: draw a circle with a radius proportional to the parameter `brushSize`
 	}
 
 	/**
 	 * Creates a predefined brush instance with given index
 	 * @param index the brush index, currently between 0 and 5.
-	 * @return a new BrushButton instance with size
+	 * @return a new BrushButton instance with brushSize
 	 */
-	public static BrushButton create(int index) {
+	public static BrushButton create(int index, Dimension panelSize) {
 		// TODO: find the optimal brush sizes.
 		switch (index) {
 			case 0:
-				return new BrushButton(2);
+				return new BrushButton(panelSize, 2);
 			case 1:
-				return new BrushButton(4);
+				return new BrushButton(panelSize, 4);
 			case 2:
-				return new BrushButton(8);
+				return new BrushButton(panelSize, 8);
 			case 3:
-				return new BrushButton(12);
+				return new BrushButton(panelSize, 12);
 			case 4:
-				return new BrushButton(16);
+				return new BrushButton(panelSize, 16);
 			case 5:
-				return new BrushButton(20);
+				return new BrushButton(panelSize, 20);
 			default:
-				return new BrushButton(20);
+				return new BrushButton(panelSize, 20);
 		}
 	}
 }

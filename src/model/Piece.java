@@ -12,6 +12,8 @@ public class Piece {
 	protected List<Point> points;
 	protected int radius;
 	protected Color color;
+	protected Long startTime;
+	protected Long endTime;
 
 	public Piece(Color color, int radius) {
 		points = new CopyOnWriteArrayList<>();
@@ -45,5 +47,21 @@ public class Piece {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	public Long getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Long startTime) {
+		this.startTime = startTime;
+	}
+
+	public Long getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Long endTime) {
+		this.endTime = endTime;
 	}
 }

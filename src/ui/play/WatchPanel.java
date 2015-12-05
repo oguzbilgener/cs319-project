@@ -5,17 +5,16 @@ import java.awt.*;
 /**
  * @author oguzb
  */
-public class WordDrawPanel extends PlayPanel {
+public class WatchPanel extends PlayPanel {
 
-
-	public WordDrawPanel(Dimension size) {
+	public WatchPanel(Dimension size) {
 		super(size);
-		setBackground(Color.cyan);
+		setBackground(Color.yellow);
 	}
 
 	@Override
 	protected Canvas initializeCanvas() {
-		return new DrawingCanvas();
+		return new ViewingCanvas();
 	}
 
 	@Override

@@ -28,4 +28,12 @@ public abstract class PlayPanel extends GameStatePanel {
 	}
 
 	protected abstract Canvas initializeCanvas();
+
+	protected abstract ColorPanel initializeColorPanel();
+
+	protected abstract BrushPanel initializeBrushPanel();
+
+	protected abstract WordPanel initializeWordPanel();
+
+	protected abstract ActionToolbar initializeActionToolbar();
 }

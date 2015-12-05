@@ -1,5 +1,7 @@
 package ui.play;
 
+import controller.GameController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -16,11 +18,12 @@ public class BrushPanel extends SelectorPanel {
 		brushes = new BrushButton[6];
 
 		for(int i = 0; i < brushes.length; i++) {
-			brushes[i] = BrushButton.create(i);
-			brushes[i].addMouseListener(this);
-
-			// TODO: place this button into the panel
+			brushes[i] = BrushButton.create(i, getItemSize());
+			if(isInteractionAllowed()) {
+				brushes[i].addMouseListener(this);
+			}
 		}
+		super.placeItems();
 	}
 
 	@Override
@@ -37,6 +40,6 @@ public class BrushPanel extends SelectorPanel {
 	public void mouseClicked(MouseEvent e) {
 		BrushButton brush = (BrushButton) e.getSource();
 		int size = brush.getBrushSize();
-		// TODO: delegate this event to the active controller
+		GameController.game().getSession().setBrushSize(size);
 	}
 }

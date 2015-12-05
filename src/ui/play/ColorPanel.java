@@ -1,5 +1,7 @@
 package ui.play;
 
+import controller.GameController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -16,11 +18,12 @@ public class ColorPanel extends SelectorPanel {
 		colors = new ColorSwatch[20];
 
 		for(int i = 0; i < colors.length; i++) {
-			colors[i] = ColorSwatch.create(i);
-			colors[i].addMouseListener(this);
-
-			// TODO: place this swatch into the panel
+			colors[i] = ColorSwatch.create(i, getItemSize());
+			if (isInteractionAllowed()) {
+				colors[i].addMouseListener(this);
+			}
 		}
+		super.placeItems();
 	}
 
 	@Override
@@ -37,6 +40,7 @@ public class ColorPanel extends SelectorPanel {
 	public void mouseClicked(MouseEvent e) {
 		ColorSwatch swatch = (ColorSwatch) e.getSource();
 		Color color = swatch.getColor();
-		// TODO: delegate this event to the active controller
+		// Delegate this event to the session
+		GameController.game().getSession().setColor(color);
 	}
 }
