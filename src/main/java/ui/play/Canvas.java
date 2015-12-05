@@ -1,6 +1,5 @@
 package ui.play;
 
-import com.sun.istack.internal.Nullable;
 import controller.GameController;
 import model.Piece;
 
@@ -22,7 +21,7 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 	protected abstract boolean isInteractionAllowed();
 
 	private List<Piece> pieces;
-	@Nullable private Piece currentPiece;
+	private Piece currentPiece;
 
 	public Canvas() {
 		pieces = new CopyOnWriteArrayList<>();
@@ -47,7 +46,7 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 	public void drawPiece(Piece piece, Graphics g) {
 		g.setColor(piece.getColor());
 		for(Point point : piece.getPoints()) {
-			g.fillOval((int)point.getX(), (int)point.getY(), piece.getRadius()*2, piece.getRadius()*2);
+			g.fillOval((int)point.getX()-piece.getRadius(), (int)point.getY()-piece.getRadius(), piece.getRadius()*2, piece.getRadius()*2);
 		}
 	}
 

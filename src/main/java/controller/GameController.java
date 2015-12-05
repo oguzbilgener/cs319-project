@@ -1,7 +1,5 @@
 package controller;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import model.GameSession;
 import model.Player;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -19,10 +17,10 @@ public class GameController implements Observer {
 
 	protected GameWindow window;
 	// Used by static mainWindow() method. See below for the purpose
-	@NotNull private static GameController staticGameInstance;
+	private static GameController staticGameInstance;
 
-	@Nullable private GameSession session;
-	@Nullable private GameStateController activeController;
+	private GameSession session;
+	private GameStateController activeController;
 
 	public void createAndShowGUI() {
 		//Create and set up the window.
@@ -139,7 +137,6 @@ public class GameController implements Observer {
 	 * `UIApplication.sharedApplication().delegate.window`
 	 * @return the main controller object of the application
 	 */
-	@NotNull
 	public static GameController game() {
 		return staticGameInstance;
 	}
