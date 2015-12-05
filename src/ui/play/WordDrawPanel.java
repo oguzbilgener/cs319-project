@@ -10,7 +10,7 @@ public class WordDrawPanel extends PlayPanel {
 
 	public WordDrawPanel(Dimension size) {
 		super(size);
-		setBackground(Color.cyan);
+		setBackground(Color.decode("#EDEDED"));
 	}
 
 	@Override
@@ -19,22 +19,22 @@ public class WordDrawPanel extends PlayPanel {
 	}
 
 	@Override
-	protected ColorPanel initializeColorPanel() {
+	protected ColorPanel initializeColorPanel(Dimension size) {
+		return new ColorPanel(size);
+	}
+
+	@Override
+	protected BrushPanel initializeBrushPanel(Dimension size) {
+		return new BrushPanel(size);
+	}
+
+	@Override
+	protected WordPanel initializeWordPanel(Dimension size) {
 		return null;
 	}
 
 	@Override
-	protected BrushPanel initializeBrushPanel() {
-		return null;
-	}
-
-	@Override
-	protected WordPanel initializeWordPanel() {
-		return null;
-	}
-
-	@Override
-	protected ActionToolbar initializeActionToolbar() {
+	protected ActionToolbar initializeActionToolbar(Dimension size) {
 		return null;
 	}
 }

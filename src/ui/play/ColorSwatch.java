@@ -10,10 +10,12 @@ public class ColorSwatch extends JPanel {
 
 	protected Color color;
 	protected String name;
+	private Dimension size;
 
 	protected ColorSwatch(Dimension size, Color color, String name) {
 		this.color = color;
 		this.name = name;
+		this.size = size;
 	}
 
 	public Color getColor() {
@@ -24,7 +26,7 @@ public class ColorSwatch extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(this.color);
-		// TODO: fill the cell with this color
+		g.fillRect(0,0,size.width,size.height);
 	}
 
 	/**
@@ -38,7 +40,42 @@ public class ColorSwatch extends JPanel {
 				return new ColorSwatch(size, Color.decode("#FFFFFF"), "White");
 			case 1:
 				return new ColorSwatch(size, Color.decode("#000000"), "Black");
-			// TODO: Define the rest of the colors
+			case 2:
+				return new ColorSwatch(size, Color.decode("#C1C1C1"), "Light Gray");
+			case 3:
+				return new ColorSwatch(size, Color.decode("#6F6F6F"), "Dark Gray");
+			case 4:
+				return new ColorSwatch(size, Color.decode("#B77D57"), "Brown");
+			case 5:
+				return new ColorSwatch(size, Color.decode("#8C0010"), "Bordo");
+			case 6:
+				return new ColorSwatch(size, Color.decode("#FDACC8"), "Pink");
+			case 7:
+				return new ColorSwatch(size, Color.decode("#F11717"), "Red");
+			case 8:
+				return new ColorSwatch(size, Color.decode("#FCCA00"), "Light Orange");
+			case 9:
+				return new ColorSwatch(size, Color.decode("#FF8006"), "Orange");
+			case 10:
+				return new ColorSwatch(size, Color.decode("#EDE3AD"), "Light Yellow");
+			case 11:
+				return new ColorSwatch(size, Color.decode("#FEF500"), "Yellow");
+			case 12:
+				return new ColorSwatch(size, Color.decode("#B6E900"), "Light Green");
+			case 13:
+				return new ColorSwatch(size, Color.decode("#12B348"), "Green");
+			case 14:
+				return new ColorSwatch(size, Color.decode("#BFDAE4"), "Light Blue");
+			case 15:
+				return new ColorSwatch(size, Color.decode("#00A0EC"), "Blue");
+			case 16:
+				return new ColorSwatch(size, Color.decode("#708FC4"), "Dark Blue");
+			case 17:
+				return new ColorSwatch(size, Color.decode("#3E41D0"), "Indigo");
+			case 18:
+				return new ColorSwatch(size, Color.decode("#C7BEEB"), "Lilac");
+			case 19:
+				return new ColorSwatch(size, Color.decode("#A743A9"), "Purple");
 			default:
 				return new ColorSwatch(size, Color.decode("#000000"), "");
 		}

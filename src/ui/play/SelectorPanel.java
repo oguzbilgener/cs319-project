@@ -10,18 +10,23 @@ import java.awt.event.MouseListener;
  */
 public abstract class SelectorPanel extends JPanel implements MouseListener {
 
-	private Dimension panelSize;
-
 	public SelectorPanel(Dimension panelSize) {
-		this.panelSize = panelSize;
+		setSize(panelSize);
 	}
 
 	protected void placeItems() {
 		setLayout(null);
-		// TODO: iterate over all items over 2 dimension,
-		// - use getMatrixDimensions()
-		// - use getItem()
-		// - use getSize()
+		for(int row=0; row < getMatrixDimensions().height; row++) {
+			for(int column=0; column < getMatrixDimensions().width;column++) {
+				JPanel item = getItem(column + getMatrixDimensions().width * row);
+				add(item);
+				item.setBounds(
+						column * (getSize().width / getMatrixDimensions().width),
+						row * (getSize().height / getMatrixDimensions().height),
+						getSize().width / getMatrixDimensions().width,
+						getSize().height / getMatrixDimensions().height);
+			}
+		}
 	}
 
 	protected boolean isInteractionAllowed() {
@@ -33,8 +38,8 @@ public abstract class SelectorPanel extends JPanel implements MouseListener {
 	protected abstract JPanel getItem(int position);
 
 	protected Dimension getItemSize() {
-		return new Dimension(panelSize.width / getMatrixDimensions().width,
-				panelSize.height / getMatrixDimensions().height);
+		return new Dimension(getSize().width / getMatrixDimensions().width,
+				getSize().height / getMatrixDimensions().height);
 	}
 
 	// We don't need the following events:

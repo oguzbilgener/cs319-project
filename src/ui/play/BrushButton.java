@@ -9,9 +9,11 @@ import java.awt.*;
 public class BrushButton extends JPanel {
 
 	protected int brushSize;
+	private Dimension size;
 
 	private BrushButton(Dimension size, int brushSize) {
 		this.brushSize = brushSize;
+		this.size = size;
 	}
 
 	public int getBrushSize() {
@@ -20,9 +22,10 @@ public class BrushButton extends JPanel {
 
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.setColor(Color.gray);
-		// TODO: draw a circle with a radius proportional to the parameter `brushSize`
+		g.setColor(Color.white);
+		g.fillRect(0, 0, size.width, size.height);
+		g.setColor(Color.black);
+		g.fillOval(size.width/2 - brushSize, size.width/2 - brushSize, brushSize*2, brushSize*2);
 	}
 
 	/**
@@ -40,13 +43,13 @@ public class BrushButton extends JPanel {
 			case 2:
 				return new BrushButton(panelSize, 8);
 			case 3:
-				return new BrushButton(panelSize, 12);
+				return new BrushButton(panelSize, 10);
 			case 4:
-				return new BrushButton(panelSize, 16);
+				return new BrushButton(panelSize, 12);
 			case 5:
-				return new BrushButton(panelSize, 20);
+				return new BrushButton(panelSize, 16);
 			default:
-				return new BrushButton(panelSize, 20);
+				return new BrushButton(panelSize, 2);
 		}
 	}
 }
