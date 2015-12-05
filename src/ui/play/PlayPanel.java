@@ -9,18 +9,22 @@ import java.awt.*;
  */
 public abstract class PlayPanel extends GameStatePanel {
 
+	private Canvas canvas;
+
 	public PlayPanel(Dimension size) {
 		super(size);
 		// Doing it in absolute way
 		setLayout(null);
 
-		System.out.println(getSize());
-		System.out.println(getInsets());
-
-		Canvas canvas = initializeCanvas();
+		canvas = initializeCanvas();
 		add(canvas);
+		canvas.setBounds(16, 39, 360, 360);
 
 
+	}
+
+	public Canvas getCanvas() {
+		return canvas;
 	}
 
 	protected abstract Canvas initializeCanvas();

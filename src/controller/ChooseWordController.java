@@ -15,6 +15,6 @@ public class ChooseWordController extends GameStateController {
 
 	@Override
 	GameStatePanel initializePanel() {
-		return new ChooseWordPanel(GameController.mainWindow().getContentSize());
+		return new ChooseWordPanel(GameController.game().getWindow().getContentSize());
 	}
 }

@@ -11,13 +11,15 @@ public class ColorPanel extends SelectorPanel {
 
 	private ColorSwatch[] colors;
 
-	public ColorPanel() {
+	public ColorPanel(Dimension panelSize) {
+		super(panelSize);
 		colors = new ColorSwatch[20];
 
-		// TODO: initialize each color, give values
+		for(int i = 0; i < colors.length; i++) {
+			colors[i] = ColorSwatch.create(i);
+			colors[i].addMouseListener(this);
 
-		for(ColorSwatch color : colors) {
-			color.addMouseListener(this);
+			// TODO: place this swatch into the panel
 		}
 	}
 

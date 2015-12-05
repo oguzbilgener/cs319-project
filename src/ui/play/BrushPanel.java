@@ -9,15 +9,17 @@ import java.awt.event.MouseEvent;
  */
 public class BrushPanel extends SelectorPanel {
 
-	private BrushPanel[] brushes;
+	private BrushButton[] brushes;
 
-	public BrushPanel() {
-		brushes = new BrushPanel[6];
+	public BrushPanel(Dimension panelSize) {
+		super(panelSize);
+		brushes = new BrushButton[6];
 
-		// TODO: initialize each brush, give values
+		for(int i = 0; i < brushes.length; i++) {
+			brushes[i] = BrushButton.create(i);
+			brushes[i].addMouseListener(this);
 
-		for (BrushPanel brush: brushes) {
-			brush.addMouseListener(this);
+			// TODO: place this button into the panel
 		}
 	}
 

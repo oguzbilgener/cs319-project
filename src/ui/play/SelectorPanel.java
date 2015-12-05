@@ -12,8 +12,8 @@ public abstract class SelectorPanel extends JPanel implements MouseListener {
 
 	private JPanel[] panels;
 
-	public SelectorPanel() {
-		// TODO: create a table with given dimensions, place each item into cells.
+	public SelectorPanel(Dimension panelSize) {
+		// TODO: create a table with predefined matrix dimensions, place each item into cells.
 		// TODO: also listen for clicks and delegate to onItemClicked
 	}
 

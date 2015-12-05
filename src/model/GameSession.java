@@ -1,5 +1,9 @@
 package model;
 
+import ui.play.BrushButton;
+import ui.play.ColorSwatch;
+
+import java.awt.*;
 import java.util.Observable;
 
 /**
@@ -16,6 +20,8 @@ public class GameSession extends Observable {
 	protected boolean myPlayerIsActive;
 	protected int roundNumber;
 	protected RoundState roundState;
+	protected Color color;
+	protected int brushSize;
 
 	public GameSession(Player myPlayer, Player otherPlayer, boolean isMyPlayerActive) {
 		this.myPlayer = myPlayer;
@@ -23,6 +29,8 @@ public class GameSession extends Observable {
 		this.myPlayerIsActive = isMyPlayerActive;
 		this.roundNumber = 1;
 		this.roundState = isMyPlayerActive ? RoundState.DRAW : RoundState.WATCH;
+		this.color = ColorSwatch.create(1).getColor(); // Default color is black
+		this.brushSize = BrushButton.create(0).getBrushSize(); // Default brush is the smallest.
 	}
 
 	public Player getMyPlayer() {
@@ -32,7 +40,7 @@ public class GameSession extends Observable {
 	public void setMyPlayer(Player myPlayer) {
 		this.myPlayer = myPlayer;
 		setChanged();
-		notifyObservers(myPlayer);
+		notifyObservers(new Field(Field.Name.MY_PLAYER, myPlayer));
 	}
 
 	public Player getOtherPlayer() {
@@ -42,7 +50,7 @@ public class GameSession extends Observable {
 	public void setOtherPlayer(Player otherPlayer) {
 		this.otherPlayer = otherPlayer;
 		setChanged();
-		notifyObservers(otherPlayer);
+		notifyObservers(new Field(Field.Name.OTHER_PLAYER, otherPlayer));
 	}
 
 	public boolean isMyPlayerIsActive() {
@@ -52,7 +60,7 @@ public class GameSession extends Observable {
 	public void setMyPlayerIsActive(boolean myPlayerIsActive) {
 		this.myPlayerIsActive = myPlayerIsActive;
 		setChanged();
-		notifyObservers(myPlayerIsActive);
+		notifyObservers(new Field(Field.Name.MY_PLAYER_IS_ACTIVE, myPlayerIsActive));
 	}
 
 	public int getRoundNumber() {
@@ -62,7 +70,7 @@ public class GameSession extends Observable {
 	public void setRoundNumber(int roundNumber) {
 		this.roundNumber = roundNumber;
 		setChanged();
-		notifyObservers(roundNumber);
+		notifyObservers(new Field(Field.Name.ROUND_NUMBER, roundNumber));
 	}
 
 	public RoundState getRoundState() {
@@ -72,7 +80,7 @@ public class GameSession extends Observable {
 	public void setRoundState(RoundState roundState) {
 		this.roundState = roundState;
 		setChanged();
-		notifyObservers(roundState);
+		notifyObservers(new Field(Field.Name.ROUND_STATE, roundState));
 	}
 
 	public Player getActivePlayer() {
@@ -80,5 +88,39 @@ public class GameSession extends Observable {
 			return myPlayer;
 		}
 		return otherPlayer;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+		setChanged();
+		notifyObservers(new Field(Field.Name.COLOR, color));
+	}
+
+	public int getBrushSize() {
+		return brushSize;
+	}
+
+	public void setBrushSize(Integer brushSize) {
+		this.brushSize = brushSize;
+		setChanged();
+		notifyObservers(new Field(Field.Name.BRUSH_SIZE, brushSize));
+	}
+
+	public static class Field {
+		public Name name;
+		public Object object;
+
+		public enum Name {
+			MY_PLAYER, OTHER_PLAYER, MY_PLAYER_IS_ACTIVE, ROUND_NUMBER, ROUND_STATE, COLOR, BRUSH_SIZE
+		}
+
+		public Field(Name name, Object object) {
+			this.name = name;
+			this.object = object;
+		}
 	}
 }

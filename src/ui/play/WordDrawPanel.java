@@ -1,8 +1,5 @@
 package ui.play;
 
-import ui.play.Canvas;
-import ui.play.PlayPanel;
-
 import java.awt.*;
 
 /**
@@ -13,6 +10,7 @@ public class WordDrawPanel extends PlayPanel {
 
 	public WordDrawPanel(Dimension size) {
 		super(size);
+		setBackground(Color.cyan);
 	}
 
 	@Override
