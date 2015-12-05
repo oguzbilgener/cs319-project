@@ -15,6 +15,7 @@ public class ColorPanel extends SelectorPanel {
 
 	public ColorPanel(Dimension panelSize) {
 		super(panelSize);
+		setBackground(Color.white);
 		colors = new ColorSwatch[20];
 
 		for(int i = 0; i < colors.length; i++) {

@@ -10,7 +10,7 @@ public class WordDrawPanel extends PlayPanel {
 
 	public WordDrawPanel(Dimension size) {
 		super(size);
-		setBackground(Color.cyan);
+		setBackground(Color.decode("#EDEDED"));
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class WordDrawPanel extends PlayPanel {
 
 	@Override
 	protected BrushPanel initializeBrushPanel(Dimension size) {
-		return null;
+		return new BrushPanel(size);
 	}
 
 	@Override

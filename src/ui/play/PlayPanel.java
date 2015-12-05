@@ -21,7 +21,11 @@ public abstract class PlayPanel extends GameStatePanel {
 		canvas.setBounds(16, 39, 360, 360);
 		ColorPanel colorPanel = initializeColorPanel(new Dimension(64, 320));
 		add(colorPanel);
-		colorPanel.setBounds(296, 39, colorPanel.getSize().width, colorPanel.getSize().height);
+		colorPanel.setBounds(396, 39, colorPanel.getSize().width, colorPanel.getSize().height);
+
+		BrushPanel brushPanel = initializeBrushPanel(new Dimension(64, 96));
+		add(brushPanel);
+		brushPanel.setBounds(396, 360, brushPanel.getSize().width, brushPanel.getSize().height);
 	}
 
 	public Canvas getCanvas() {

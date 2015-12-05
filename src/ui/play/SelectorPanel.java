@@ -10,22 +10,22 @@ import java.awt.event.MouseListener;
  */
 public abstract class SelectorPanel extends JPanel implements MouseListener {
 
-	private Dimension panelSize;
-
 	public SelectorPanel(Dimension panelSize) {
-		this.panelSize = panelSize;
+		setSize(panelSize);
 	}
 
 	protected void placeItems() {
 		setLayout(null);
-		for(int x = 0; x < getMatrixDimensions().width*getMatrixDimensions().height; x++){
-			JPanel item = getItem(x);
-			add(item);
-			item.setBounds(
-					x * (panelSize.width / getMatrixDimensions().width),
-					x * (panelSize.height / getMatrixDimensions().height),
-					panelSize.width / getMatrixDimensions().width,
-					panelSize.height / getMatrixDimensions().height);
+		for(int row=0; row < getMatrixDimensions().height; row++) {
+			for(int column=0; column < getMatrixDimensions().width;column++) {
+				JPanel item = getItem(column + getMatrixDimensions().width * row);
+				add(item);
+				item.setBounds(
+						column * (getSize().width / getMatrixDimensions().width),
+						row * (getSize().height / getMatrixDimensions().height),
+						getSize().width / getMatrixDimensions().width,
+						getSize().height / getMatrixDimensions().height);
+			}
 		}
 	}
 
@@ -38,8 +38,8 @@ public abstract class SelectorPanel extends JPanel implements MouseListener {
 	protected abstract JPanel getItem(int position);
 
 	protected Dimension getItemSize() {
-		return new Dimension(panelSize.width / getMatrixDimensions().width,
-				panelSize.height / getMatrixDimensions().height);
+		return new Dimension(getSize().width / getMatrixDimensions().width,
+				getSize().height / getMatrixDimensions().height);
 	}
 
 	// We don't need the following events:
