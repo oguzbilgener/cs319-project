@@ -14,6 +14,7 @@ public class BrushButton extends JPanel {
 	private BrushButton(Dimension size, int brushSize) {
 		this.brushSize = brushSize;
 		this.size = size;
+		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 
 	public int getBrushSize() {

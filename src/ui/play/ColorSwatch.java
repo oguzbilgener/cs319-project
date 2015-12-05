@@ -10,23 +10,28 @@ public class ColorSwatch extends JPanel {
 
 	protected Color color;
 	protected String name;
-	private Dimension size;
 
 	protected ColorSwatch(Dimension size, Color color, String name) {
 		this.color = color;
 		this.name = name;
-		this.size = size;
+		setSize(size);
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 
 	public Color getColor() {
 		return color;
 	}
 
-	@Override
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(this.color);
-		g.fillRect(0,0,size.width,size.height);
+		g.fillRect(0,0,getSize().width,getSize().height);
 	}
 
 	/**

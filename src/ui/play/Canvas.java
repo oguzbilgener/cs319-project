@@ -29,6 +29,7 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		setBackground(Color.white);
+		setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 	}
 
 	@Override
