@@ -4,6 +4,8 @@ package ui.gen;
 import ui.GameStatePanel;
 
 import java.awt.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  *
@@ -44,6 +46,11 @@ public class HostPanel extends GameStatePanel {
         usernameLabel.setText("Your username is:");
 
         userText.setEditable(false);
+        try {
+            userText.setText(InetAddress.getLocalHost().toString());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         userText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userTextActionPerformed(evt);

@@ -2,6 +2,7 @@ package controller;
 
 import model.GameSession;
 import model.Player;
+import network.P2PManager;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ui.GameWindow;
 import ui.event.MenuEvent;
@@ -13,7 +14,7 @@ import java.util.Observer;
 /**
  * @author oguzb
  */
-public class GameController implements Observer {
+public class GameController implements Observer, P2PManager.P2PConnectionListener {
 
 	protected GameWindow window;
 	// Used by static mainWindow() method. See below for the purpose
@@ -21,6 +22,8 @@ public class GameController implements Observer {
 
 	private GameSession session;
 	private GameStateController activeController;
+
+	private P2PManager p2pManager;
 
 	public void createAndShowGUI() {
 		//Create and set up the window.
@@ -38,9 +41,9 @@ public class GameController implements Observer {
 		MenuEvent.Listener menuListener = itemType -> {
 			switch (itemType) {
 				case host:
-//					showHostScreen();
+					showHostScreen();
 					// startNewGame();
-					chooseWord();
+//					chooseWord();
 					break;
 				case join:
 					showJoinScreen();
@@ -56,10 +59,17 @@ public class GameController implements Observer {
 		};
 
 		window.showMainMenu(menuListener);
+
+        // TODO: initialize this after we logged in
+        Player ownPlayer = new Player();
+        ownPlayer.setUsername("oguz");
+        ownPlayer.setPreferredAddress("192.168.2.200");
+        p2pManager = new P2PManager(ownPlayer, this);
 	}
 
 	private void showHostScreen() {
 		window.showHostPanel();
+        p2pManager.host();
 	}
 
 	private void showJoinScreen() {
@@ -77,6 +87,13 @@ public class GameController implements Observer {
 		///
 		session.setRoundState(GameSession.RoundState.CHOOSE_WORD);
 	}
+
+    public void joinPlayer(String ipAddress) {
+        Player hostPlayer = new Player();
+        hostPlayer.setPreferredAddress(ipAddress);
+        hostPlayer.setAddresses(new String[]{ipAddress});
+        p2pManager.join(hostPlayer);
+    }
 
 	private void startNewGame() {
 		session = new GameSession(new Player(), new Player(), true);
@@ -147,5 +164,30 @@ public class GameController implements Observer {
 
 	public GameSession getSession() {
 		return session;
+	}
+
+	@Override
+	public void onConnected() {
+        System.out.println("GC connected");
+	}
+
+	@Override
+	public void onGuestIdentified(Player guest) {
+        System.out.println("GC identified");
+	}
+
+	@Override
+	public void onHostConnectionRefused() {
+        System.out.println("GC refused");
+	}
+
+	@Override
+	public void onDisconnected() {
+        System.out.println("GC disconnected");
+	}
+
+	@Override
+	public void onError(Exception exception) {
+        System.out.println("GC error");
 	}
 }

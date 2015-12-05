@@ -17,7 +17,8 @@ public class Message {
     public Message(P2PManager.MessageType type, Object contentObject) {
         this.type = type;
         if(contentObject != null) {
-            this.content = new Gson().toJson(contentObject);
+//            this.content = new Gson().toJson(contentObject);
+            this.content = contentObject;
         }
         else {
             this.content = "";

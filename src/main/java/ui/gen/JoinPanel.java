@@ -1,6 +1,7 @@
 
 package ui.gen;
 
+import controller.GameController;
 import ui.GameStatePanel;
 
 import java.awt.*;
@@ -49,6 +50,10 @@ public class JoinPanel extends GameStatePanel {
         });
 
         connectButton.setText("Connect");
+
+        connectButton.addActionListener((e) -> {
+            GameController.game().joinPlayer(enterNameText.getText());
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

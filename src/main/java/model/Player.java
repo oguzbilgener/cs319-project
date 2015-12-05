@@ -1,6 +1,9 @@
 package model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * @author oguzb
@@ -31,6 +34,22 @@ public class Player {
 
     public static Player fromJson(String jsonStr) {
         return new Gson().fromJson(jsonStr, Player.class);
+    }
+
+    public static Player fromMessageJson(String jsonStr) {
+        JsonElement element = new JsonParser().parse(jsonStr);
+        JsonObject object = element.getAsJsonObject();
+        try {
+            JsonObject content = object.get("content").getAsJsonObject();
+            Player player = new Player();
+            player.setUsername(content.get("username").getAsString());
+            player.setPreferredAddress(content.get("preferredAddress").getAsString());
+            return player;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String toJson() {
