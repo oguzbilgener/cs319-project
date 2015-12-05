@@ -10,10 +10,12 @@ public class ColorSwatch extends JPanel {
 
 	protected Color color;
 	protected String name;
+	private Dimension size;
 
 	protected ColorSwatch(Dimension size, Color color, String name) {
 		this.color = color;
 		this.name = name;
+		this.size = size;
 	}
 
 	public Color getColor() {
@@ -24,7 +26,7 @@ public class ColorSwatch extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(this.color);
-		// TODO: fill the cell with this color
+		g.fillRect(0,0,size.width,size.height);
 	}
 
 	/**

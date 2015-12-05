@@ -18,22 +18,22 @@ public class WatchPanel extends PlayPanel {
 	}
 
 	@Override
-	protected ColorPanel initializeColorPanel() {
+	protected ColorPanel initializeColorPanel(Dimension size) {
 		return null;
 	}
 
 	@Override
-	protected BrushPanel initializeBrushPanel() {
+	protected BrushPanel initializeBrushPanel(Dimension size) {
 		return null;
 	}
 
 	@Override
-	protected WordPanel initializeWordPanel() {
+	protected WordPanel initializeWordPanel(Dimension size) {
 		return null;
 	}
 
 	@Override
-	protected ActionToolbar initializeActionToolbar() {
+	protected ActionToolbar initializeActionToolbar(Dimension size) {
 		return null;
 	}
 }

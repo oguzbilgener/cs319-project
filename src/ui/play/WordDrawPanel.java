@@ -19,22 +19,22 @@ public class WordDrawPanel extends PlayPanel {
 	}
 
 	@Override
-	protected ColorPanel initializeColorPanel() {
+	protected ColorPanel initializeColorPanel(Dimension size) {
+		return new ColorPanel(size);
+	}
+
+	@Override
+	protected BrushPanel initializeBrushPanel(Dimension size) {
 		return null;
 	}
 
 	@Override
-	protected BrushPanel initializeBrushPanel() {
+	protected WordPanel initializeWordPanel(Dimension size) {
 		return null;
 	}
 
 	@Override
-	protected WordPanel initializeWordPanel() {
-		return null;
-	}
-
-	@Override
-	protected ActionToolbar initializeActionToolbar() {
+	protected ActionToolbar initializeActionToolbar(Dimension size) {
 		return null;
 	}
 }

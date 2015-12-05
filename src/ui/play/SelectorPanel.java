@@ -18,10 +18,15 @@ public abstract class SelectorPanel extends JPanel implements MouseListener {
 
 	protected void placeItems() {
 		setLayout(null);
-		// TODO: iterate over all items over 2 dimension,
-		// - use getMatrixDimensions()
-		// - use getItem()
-		// - use getSize()
+		for(int x = 0; x < getMatrixDimensions().width*getMatrixDimensions().height; x++){
+			JPanel item = getItem(x);
+			add(item);
+			item.setBounds(
+					x * (panelSize.width / getMatrixDimensions().width),
+					x * (panelSize.height / getMatrixDimensions().height),
+					panelSize.width / getMatrixDimensions().width,
+					panelSize.height / getMatrixDimensions().height);
+		}
 	}
 
 	protected boolean isInteractionAllowed() {
