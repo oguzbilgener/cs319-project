@@ -14,5 +14,4 @@ public abstract class GameStatePanel extends JPanel {
 
 
 
-
 }

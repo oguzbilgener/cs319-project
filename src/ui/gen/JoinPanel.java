@@ -1,87 +1,89 @@
 
 package ui.gen;
 
+import ui.GameStatePanel;
+
+import java.awt.*;
+
 /**
+ *
  * @author Görkem Çamlı
  */
-public class JoinPanel extends javax.swing.JPanel {
+public class JoinPanel extends GameStatePanel {
 
+    
+    // Variables declaration 
+    private javax.swing.JButton connectButton;
+    private javax.swing.JLabel enterNameLabel;
+    private javax.swing.JTextField enterNameText;
+    private javax.swing.JLabel joinLabel;
+ 
 
-	// Variables declaration
-	private javax.swing.JButton connectButton;
-	private javax.swing.JLabel enterNameLabel;
-	private javax.swing.JTextField enterNameText;
-	private javax.swing.JLabel joinLabel;
+    /**
+     * Creates new form GuessBoxPanel
+     */
+    public JoinPanel(Dimension size) {
+        super(size);
+        initComponents();
+    }
 
-	/**
-	 * Creates new form JoinPanel
-	 */
-	public JoinPanel() {
-		initComponents();
-	}
+   
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
 
+        joinLabel = new javax.swing.JLabel();
+        enterNameLabel = new javax.swing.JLabel();
+        enterNameText = new javax.swing.JTextField();
+        connectButton = new javax.swing.JButton();
 
-	@SuppressWarnings("unchecked")
-	private void initComponents() {
+        joinLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); 
+        joinLabel.setText("Join Game");
 
-		joinLabel = new javax.swing.JLabel();
-		enterNameLabel = new javax.swing.JLabel();
-		enterNameText = new javax.swing.JTextField();
-		connectButton = new javax.swing.JButton();
+        enterNameLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); 
+        enterNameLabel.setText("Enter your buddy's username:");
 
-		joinLabel.setFont(new java.awt.Font("Tahoma", 0, 36));
-		joinLabel.setText("Join Game");
+        enterNameText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterNameTextActionPerformed(evt);
+            }
+        });
 
-		enterNameLabel.setFont(new java.awt.Font("Tahoma", 0, 18));
-		enterNameLabel.setText("Enter your buddy's username:");
+        connectButton.setText("Connect");
 
-		enterNameText.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				enterNameTextActionPerformed(evt);
-			}
-		});
-
-		connectButton.setText("Connect");
-
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-		this.setLayout(layout);
-		layout.setHorizontalGroup(
-				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(layout.createSequentialGroup()
-								.addGap(186, 186, 186)
-								.addComponent(joinLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-								.addGap(93, 93, 93))
-						.addGroup(layout.createSequentialGroup()
-								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-										.addGroup(layout.createSequentialGroup()
-												.addGap(151, 151, 151)
-												.addComponent(enterNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGroup(layout.createSequentialGroup()
-												.addGap(137, 137, 137)
-												.addComponent(enterNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGroup(layout.createSequentialGroup()
-												.addGap(210, 210, 210)
-												.addComponent(connectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		layout.setVerticalGroup(
-				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(layout.createSequentialGroup()
-								.addGap(44, 44, 44)
-								.addComponent(joinLabel)
-								.addGap(36, 36, 36)
-								.addComponent(enterNameLabel)
-								.addGap(34, 34, 34)
-								.addComponent(enterNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(73, 73, 73)
-								.addComponent(connectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(113, Short.MAX_VALUE))
-		);
-	}
-
-	private void enterNameTextActionPerformed(java.awt.event.ActionEvent evt) {
-
-	}
-
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(146, 146, 146)
+                            .addComponent(connectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(99, 99, 99)
+                            .addComponent(enterNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(enterNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(joinLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(107, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(joinLabel)
+                .addGap(27, 27, 27)
+                .addComponent(enterNameLabel)
+                .addGap(50, 50, 50)
+                .addComponent(enterNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
+                .addComponent(connectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(176, Short.MAX_VALUE))
+        );
+    }
+    private void enterNameTextActionPerformed(java.awt.event.ActionEvent evt) {
+    }
 
 }

@@ -38,15 +38,15 @@ public class GameWindow extends JFrame {
 	}
 
 	public void showHostPanel() {
-		replacePanel(new HostPanel());
+		replacePanel(new HostPanel(getContentSize()));
 	}
 
 	public void showJoinPanel() {
-		replacePanel(new JoinPanel());
+		replacePanel(new JoinPanel(getContentSize()));
 	}
 
 	public void showCreditsPanel() {
-		replacePanel(new CreditsPanel());
+		replacePanel(new CreditsPanel(getContentSize()));
 	}
 
 	public void replacePanel(Component component) {
