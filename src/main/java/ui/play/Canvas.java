@@ -20,7 +20,7 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 
 	protected abstract boolean isInteractionAllowed();
 
-	private List<Piece> pieces;
+	protected List<Piece> pieces;
 	private Piece currentPiece;
 
 	public Canvas() {
@@ -45,6 +45,9 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 
 	public void drawPiece(Piece piece, Graphics g) {
 		g.setColor(piece.getColor());
+		if(piece.getPoints() == null) {
+			return;
+		}
 		for(Point point : piece.getPoints()) {
 			g.fillOval((int)point.getX()-piece.getRadius(), (int)point.getY()-piece.getRadius(), piece.getRadius()*2, piece.getRadius()*2);
 		}
@@ -101,14 +104,10 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-
-	}
+	public void mouseExited(MouseEvent e) {}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
@@ -116,7 +115,5 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
-
-	}
+	public void mouseMoved(MouseEvent e) {}
 }

@@ -1,6 +1,10 @@
 package model;
 
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -14,6 +18,10 @@ public class Piece {
 	protected Color color;
 	protected Long startTime;
 	protected Long endTime;
+
+	public Piece() {
+		this(Color.black, 0);
+	}
 
 	public Piece(Color color, int radius) {
 		points = new CopyOnWriteArrayList<>();
@@ -31,6 +39,10 @@ public class Piece {
 
 	public List<Point> getPoints() {
 		return points;
+	}
+
+	void setPoints(List<Point> points) {
+		this.points = points;
 	}
 
 	public int getRadius() {
@@ -63,5 +75,24 @@ public class Piece {
 
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
+	}
+
+	public static Piece fromJson(String jsonStr) {
+        JsonElement msg = new JsonParser().parse(jsonStr);
+		Piece piece = new Gson().fromJson(msg.getAsJsonObject().get("content"), Piece.class);
+        System.out.println(piece.points);
+//        JsonArray points = msg.getAsJsonObject().get("points").getAsJsonArray();
+//
+//        List<Point> pointsList = new CopyOnWriteArrayList<>();
+//        for(JsonElement el: points) {
+//            JsonObject o = el.getAsJsonObject();
+//            Point p = new Point(o.get("x").getAsInt(), o.get("y").getAsInt());
+//            System.out.println(p);
+//            pointsList.add(p);
+//        }
+//        piece.setPoints(pointsList);
+//		ArrayList points = new Gson().fromJson(object.get("points"),  new TypeToken<List<Long>>(){}.getType());
+//		piece.setPoints(points);
+        return piece;
 	}
 }

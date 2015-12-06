@@ -1,6 +1,7 @@
 package controller;
 
 import model.GameSession;
+import model.Piece;
 import model.Player;
 import network.P2PManager;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -42,7 +43,7 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 			switch (itemType) {
 				case host:
 					showHostScreen();
-					// startNewGame();
+					// setupNewGame();
 //					chooseWord();
 					break;
 				case join:
@@ -81,10 +82,6 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 	}
 
 	private void chooseWord() {
-		/// TODO: move these two lines to somewhere else
-		session = new GameSession(new Player(), new Player(), true);
-		session.addObserver(this);
-		///
 		session.setRoundState(GameSession.RoundState.CHOOSE_WORD);
 	}
 
@@ -95,10 +92,10 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
         p2pManager.join(hostPlayer);
     }
 
-	private void startNewGame() {
-		session = new GameSession(new Player(), new Player(), true);
+	private void setupNewGame() {
+		session = new GameSession(p2pManager.getOwnPlayer(), p2pManager.getOtherPlayer(), p2pManager.isSelfHost());
 		session.addObserver(this);
-		session.setRoundState(GameSession.RoundState.DRAW);
+        session.addObserver(p2pManager);
 	}
 
 	private void beginDrawOrWatch() {
@@ -166,7 +163,11 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 		return session;
 	}
 
-	@Override
+    public P2PManager getP2pManager() {
+        return p2pManager;
+    }
+
+    @Override
 	public void onConnected() {
         System.out.println("GC connected");
 	}
@@ -174,9 +175,29 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 	@Override
 	public void onGuestIdentified(Player guest) {
         System.out.println("GC identified");
+        if(session == null) {
+            setupNewGame();
+        }
+        chooseWord();
 	}
 
-	@Override
+    @Override
+    public void onWordChosen(String word) {
+        System.out.println("GC word chosen by active player");
+        if(session == null) {
+            setupNewGame();
+        }
+        beginDrawOrWatch();
+    }
+
+    @Override
+    public void onDraw(Piece piece) {
+        if(activeController instanceof WatchController) {
+            ((WatchController)activeController).addPiece(piece);
+        }
+    }
+
+    @Override
 	public void onHostConnectionRefused() {
         System.out.println("GC refused");
 	}

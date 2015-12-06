@@ -1,24 +1,25 @@
 package network;
 
 import com.google.gson.Gson;
+import model.GameSession;
+import model.Piece;
 import model.Player;
 
 import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author oguzb
  */
-public class P2PManager {
+public class P2PManager implements Observer {
 
     public static final int LISTEN_PORT = 4599;
-
-    public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     private Player ownPlayer;
     private Player otherPlayer;
@@ -118,8 +119,12 @@ public class P2PManager {
                 }
                 break;
             case DRAW:
+                pieceDrawn(message, jsonStr);
                 break;
             case WORD_CHOSEN:
+                if(listener != null) {
+                    listener.onWordChosen(message.content.toString());
+                }
                 break;
             case GUESS_LETTER:
                 break;
@@ -135,23 +140,11 @@ public class P2PManager {
     }
 
     private void sendMessage(Message message) {
-//        try {
-//            if (socket != null) {
-//                System.out.println("Sending message: "+message.makeJson()+" "+sdf.format(new Date()));
-//                socketOut.write(message.makeJson());
-//                socketOut.flush();
-//                System.out.println("sent.");
-//            } else {
-//                throw new NullPointerException("Must be connected to a socket.");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         messageQueue.add(message);
     }
 
     public void connected(String address) {
-        System.out.println("Connected to "+address+" "+sdf.format(new Date()));
+        System.out.println("Connected to "+address);
         if(listener != null) {
             listener.onConnected();
         }
@@ -167,7 +160,7 @@ public class P2PManager {
         new MessageListen().start();
         new MessageSend().start();
 
-        Timer timer = new Timer(3000, (e) -> {
+        Timer timer = new Timer(1000, (e) -> {
             if(selfIsHost) {
                 sendMessage(new Message(MessageType.IDENTIFY));
             }
@@ -199,7 +192,6 @@ public class P2PManager {
             if(listener != null) {
                 listener.onGuestIdentified(guest);
             }
-            sendMessage(new Message(MessageType.WORD_CHOSEN, "OGUZ"));
         }
         catch(NullPointerException e) {
             System.out.println("identification failed!!");
@@ -209,6 +201,18 @@ public class P2PManager {
     public void identifyRequested() {
         System.out.println("identify requested");
         sendMessage(new Message(MessageType.IDENTIFY, ownPlayer));
+    }
+
+    public void sendPiece(Piece piece) {
+        sendMessage(new Message(MessageType.DRAW, piece));
+    }
+
+    public void pieceDrawn(Message message, String jsonObject) {
+        Piece piece = Piece.fromJson(jsonObject);
+        System.out.println(piece.getPoints()==null);
+        if(listener != null) {
+            listener.onDraw(piece);
+        }
     }
 
     public class HostListen extends Thread {
@@ -285,21 +289,17 @@ public class P2PManager {
         @Override
         public void run() {
             super.run();
-            System.out.println("MessageListen invoke "+sdf.format(new Date()));
             try {
                 socketIn = new BufferedReader(
                         new InputStreamReader(socket.getInputStream()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            int x = 0;
             while(socketIn != null) {
-                if(x == 0) {
-                }
                 try {
                     String line = socketIn.readLine();
                     while(line != null) {
-                        System.out.println("received: "+line+" "+sdf.format(new Date()));
+                        System.out.println("received: "+line);
                         try {
                             Message m = new Gson().fromJson(line, Message.class);
                             final String l = line;
@@ -312,7 +312,6 @@ public class P2PManager {
                             }
                         }
                         catch(Exception e) {
-                            System.out.println("yo");
                             e.printStackTrace();
                         }
                         line = socketIn.readLine();
@@ -320,8 +319,6 @@ public class P2PManager {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                x++;
-                x %= 10000000;
             }
         }
     }
@@ -330,7 +327,6 @@ public class P2PManager {
         @Override
         public void run() {
             super.run();
-            int x = 0;
             while(true) {
                 try {
                     Thread.sleep(50);
@@ -341,10 +337,9 @@ public class P2PManager {
                     Message message = messageQueue.poll();
                     try {
                         if (socket != null) {
-                            System.out.println("Sending message: "+message.makeJson()+" "+sdf.format(new Date()));
+                            System.out.println("Sending message: "+message.makeJson());
                             socketOut.write(message.makeJson()+"\n");
                             socketOut.flush();
-                            System.out.println("sent.");
                         } else {
                             throw new NullPointerException("Must be connected to a socket.");
                         }
@@ -356,6 +351,32 @@ public class P2PManager {
         }
     }
 
+    @Override
+    public void update(Observable observable, Object data) {
+        if(observable instanceof GameSession) {
+            if (data != null && data instanceof GameSession.Field) {
+                GameSession.Field field = (GameSession.Field) data;
+                if(field.name == GameSession.Field.Name.CHOSEN_WORD) {
+                    // Tell other side that word is chosen
+                    // So that they can show the related pane
+                    sendMessage(new Message(MessageType.WORD_CHOSEN, data));
+                }
+            }
+        }
+    }
+
+    public Player getOwnPlayer() {
+        return ownPlayer;
+    }
+
+    public Player getOtherPlayer() {
+        return otherPlayer;
+    }
+
+    public boolean isSelfHost() {
+        return selfIsHost;
+    }
+
     private void setSocket(Socket socket) {
         this.socket = socket;
     }
@@ -365,6 +386,8 @@ public class P2PManager {
         void onGuestIdentified(Player guest);
         void onHostConnectionRefused();
         void onDisconnected();
+        void onWordChosen(String word);
+        void onDraw(Piece piece);
         void onError(Exception exception);
     }
 }
