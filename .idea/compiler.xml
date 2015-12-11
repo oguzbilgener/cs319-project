@@ -29,4 +29,7 @@
       <module name="cs319-project" target="1.8" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_STRING" value="-encoding utf8 -g" />
+  </component>
 </project>
