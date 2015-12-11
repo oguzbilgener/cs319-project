@@ -8,6 +8,8 @@ import ui.play.WordDrawPanel;
 import util.TimerListener;
 import util.TurnTimer;
 
+import java.awt.event.ActionListener;
+
 /**
  * Created by oguzb on 03/12/15.
  */
@@ -28,7 +30,10 @@ public class WatchController extends GameStateController implements TimerListene
 
 	@Override
 	GameStatePanel initializePanel() {
-        panel = new WatchPanel(GameController.game().getWindow().getContentSize());
+
+		ActionListener giveUpListener = (event) -> {};
+		ActionListener closeListener = (event) -> {};
+		panel = new WatchPanel(GameController.game().getWindow().getContentSize(), giveUpListener, closeListener);
 		turnTimer = new TurnTimer();
 		turnTimer.schedule();
 		turnTimer.addListener(panel);

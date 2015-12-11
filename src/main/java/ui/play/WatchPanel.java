@@ -4,23 +4,22 @@ import model.Piece;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * @author oguzb
  */
 public class WatchPanel extends PlayPanel {
 
+	private ActionListener giveUpListener, closeListener;
 	private Canvas canvas;
 
-	public WatchPanel(Dimension size) {
+
+	public WatchPanel(Dimension size, ActionListener  giveUpListener, ActionListener closeListener) {
 		super(size);
-		//setBackground(Color.yellow);
 
-
-	/*	setTimeLabel(new JLabel());
-		getTimeLabel().setBounds(canvas.getX(),canvas.getY()+canvas.getHeight()+50, 25,25);//size.height-55,size.width-150,25,25);
-		add(getTimeLabel());*/
-
+		this.giveUpListener = giveUpListener;
+		this.closeListener = closeListener;
 	}
 
 	public void addPiece(Piece piece) {
@@ -51,8 +50,13 @@ public class WatchPanel extends PlayPanel {
 	}
 
 	@Override
+
 	protected ActionToolbar initializeActionToolbar(Dimension size) {
-		return null;
+		ActionButton button1 = ActionButton.createGiveUpButton(new Dimension(size.width/2, size.height));
+		ActionButton button2 = ActionButton.createCloseButton(new Dimension(size.width/2, size.height));
+		ActionToolbar watchBar = new ActionToolbar(size, button1, this.giveUpListener, button2, this.closeListener);
+		
+		return watchBar;
 	}
 
 	public JLabel getTimeLabel() {

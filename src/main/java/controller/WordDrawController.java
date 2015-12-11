@@ -6,6 +6,8 @@ import ui.play.WordDrawPanel;
 import util.TimerListener;
 import util.TurnTimer;
 
+import java.awt.event.ActionListener;
+
 /**
  * Created by oguzb on 03/12/15.
  */
@@ -19,7 +21,9 @@ public class WordDrawController extends GameStateController implements TimerList
 
 	@Override
 	GameStatePanel initializePanel() {
-		WordDrawPanel panel = new WordDrawPanel(GameController.game().getWindow().getContentSize());
+		ActionListener checkListener = (event) -> {};
+		ActionListener closeListener = (event) -> {};
+		WordDrawPanel panel = new WordDrawPanel(GameController.game().getWindow().getContentSize(), checkListener, closeListener);
 		turnTimer = new TurnTimer();
 		turnTimer.schedule();
 		turnTimer.addListener(panel);
