@@ -14,6 +14,7 @@ public class WaitController extends GameStateController {
 
 	@Override
 	GameStatePanel initializePanel() {
+
 		return null;
 	}
 }
