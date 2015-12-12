@@ -44,7 +44,7 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
 
 		ActionToolbar toolbar = initializeActionToolbar(new Dimension(100,100));
 		add(toolbar);
-		toolbar.setBounds(360,470, toolbar.getSize().width, toolbar.getSize().height);
+		toolbar.setBounds(365,470, toolbar.getSize().width, toolbar.getSize().height);
 	}
 
 	public Canvas getCanvas() {
