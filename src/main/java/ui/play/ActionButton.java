@@ -12,11 +12,17 @@ public class ActionButton extends JButton {
 
     private ActionButton(Dimension size, String name, Color color){
         setSize(size);
+        System.out.println(size);
+        setSize(size);
         this.name = name;
         this.color = color;
         setText(name);
     }
-    // creating black boxes
+
+    public void paintComponent(Graphics g){
+        g.setColor(this.color);
+        g.fillRect(0,0,getSize().width,getSize().height);
+    }
     public static ActionButton createCheckButton(Dimension panelSize){
         return new ActionButton(panelSize, "\u2713", Color.decode("#12B348"));
     }

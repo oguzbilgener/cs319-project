@@ -38,6 +38,7 @@ public class WordDrawPanel extends PlayPanel {
 	}
 
 	@Override
+
 	protected ActionToolbar initializeActionToolbar(Dimension size) {
 
 		ActionButton button1 = ActionButton.createCheckButton(new Dimension(size.width/2, size.height));
