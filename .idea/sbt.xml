@@ -4,9 +4,21 @@
     <option name="linkedExternalProjectsSettings">
       <SbtProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/drawitserver" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/drawitserver" />
+            <option value="$PROJECT_DIR$/drawitserver/project" />
+          </set>
+        </option>
         <option name="sbtVersion" value="0.13.8" />
         <option name="useAutoImport" value="true" />
         <option name="useOurOwnAutoImport" value="true" />
+        <option name="myModules">
+          <set>
+            <option value="$PROJECT_DIR$/drawitserver" />
+            <option value="$PROJECT_DIR$/drawitserver/project" />
+          </set>
+        </option>
       </SbtProjectSettings>
     </option>
   </component>

@@ -13,6 +13,7 @@
         <entry key="root">
           <value>
             <ProjectSettingsEntry>
+              <option name="sourceDir" value="$PROJECT_DIR$/drawitserver/app" />
               <option name="confDir" value="$PROJECT_DIR$/drawitserver/app" />
               <option name="templateImports">
                 <list>

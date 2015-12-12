@@ -26,6 +26,9 @@ Icon
 .idea/shelf
 .idea/misc.xml
 .idea/libraries/
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/dataSources.ids
 
 
 # Thumbnails
