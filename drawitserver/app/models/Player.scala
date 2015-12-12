@@ -66,6 +66,8 @@ class Player(val id: Long,
 
   def updateAddresses(loginPlayer: LoginPlayer) = {
     DB.withConnection { implicit connection =>
+      // danger: un-sanitized input
+      // Must find a better way to work with PostgreSQL arrays in Anorm
       val addressStr = (loginPlayer.addresses.foldLeft("{")((s, a) => s + a + ",")+"}").replace(",}", "}")
       SQL("UPDATE player SET preferred_address = {preferredAddress}, addresses='"+addressStr+"' WHERE id = {id}")
       .on("id" -> id, "preferredAddress" -> loginPlayer.preferredAddress)
@@ -75,6 +77,7 @@ class Player(val id: Long,
 
   def signup() = {
     DB.withConnection { implicit connection =>
+      // danger: un-sanitized input
       val addressStr = (addresses.foldLeft("{")((s, a) => s + a + ",")+"}").replace(",}", "}")
       SQL("INSERT INTO player VALUES (default, {username}, {password}, {highscore}, {preferredAddress}, '"+addressStr+"')")
         .on("username" -> username, "password" -> password,
