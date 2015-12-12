@@ -187,7 +187,7 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
         if(session == null) {
             setupNewGame();
         }
-        beginDrawOrWatch();
+		session.setChosenWord(word);
     }
 
     @Override

@@ -359,7 +359,9 @@ public class P2PManager implements Observer {
                 if(field.name == GameSession.Field.Name.CHOSEN_WORD) {
                     // Tell other side that word is chosen
                     // So that they can show the related pane
-                    sendMessage(new Message(MessageType.WORD_CHOSEN, data));
+                    if(selfIsHost) {
+                        sendMessage(new Message(MessageType.WORD_CHOSEN, field.object));
+                    }
                 }
             }
         }

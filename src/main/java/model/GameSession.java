@@ -120,7 +120,7 @@ public class GameSession extends Observable {
 	}
 
 	public void setChosenWord(String chosenWord) {
-		this.chosenWord = chosenWord;
+		this.chosenWord = chosenWord.toUpperCase();
 		setChanged();
 		notifyObservers(new Field(Field.Name.CHOSEN_WORD,chosenWord));
 	}
