@@ -20,9 +20,7 @@ public class JoinPanel extends GameStatePanel {
     private javax.swing.JLabel joinLabel;
  
 
-    /**
-     * Creates new form GuessBoxPanel
-     */
+
     public JoinPanel(Dimension size) {
         super(size);
         initComponents();

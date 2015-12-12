@@ -17,6 +17,7 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
 	private Canvas canvas;
 	protected JLabel timeLabel;
     private int currentTime;
+    private GuessBoxPanel guessBox;
 
 	public PlayPanel(Dimension size) {
 		super(size);
@@ -25,20 +26,25 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
 
 		canvas = initializeCanvas();
 		add(canvas);
-		canvas.setBounds(16, 39, 360, 360);
+		canvas.setBounds(16, 16, 360, 360);
 		ColorPanel colorPanel = initializeColorPanel(new Dimension(64, 320));
 		add(colorPanel);
-		colorPanel.setBounds(396, 39, colorPanel.getSize().width, colorPanel.getSize().height);
+		colorPanel.setBounds(396, 16, colorPanel.getSize().width, colorPanel.getSize().height);
 
 		BrushPanel brushPanel = initializeBrushPanel(new Dimension(64, 96));
 		add(brushPanel);
 		brushPanel.setBounds(396, 360, brushPanel.getSize().width, brushPanel.getSize().height);
 
+        guessBox= new GuessBoxPanel();
+        add(guessBox);
+        guessBox.setBounds(canvas.getX(),canvas.getY()+canvas.getHeight()+10, guessBox.getWidth(), guessBox.getHeight() );
 
         timeLabel= new JLabel();
         add(timeLabel);
-        timeLabel.setBounds(canvas.getX(),canvas.getY()+canvas.getHeight()+50, 25,25);
+        timeLabel.setBounds(canvas.getX(), guessBox.getY()+guessBox.getHeight()+5, 25,25);
         timeLabel.setText("45");
+
+
 
 		// canvas.getY()+canvas.getHeight()+50, 25,25);
 				//canvas.getX()+450, canvas.getY()+450, 25,25);
