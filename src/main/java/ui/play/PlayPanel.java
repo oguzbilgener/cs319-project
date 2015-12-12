@@ -6,8 +6,6 @@ import util.TurnTimer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.TimerTask;
-import java.util.Timer;
 
 /**
  * @author oguzb
@@ -44,11 +42,9 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
         timeLabel.setBounds(canvas.getX(), guessBox.getY()+guessBox.getHeight()+5, 25,25);
         timeLabel.setText("45");
 
-
-
-		// canvas.getY()+canvas.getHeight()+50, 25,25);
-				//canvas.getX()+450, canvas.getY()+450, 25,25);
-
+		ActionToolbar toolbar = initializeActionToolbar(new Dimension(100,100));
+		add(toolbar);
+		toolbar.setBounds(365,470, toolbar.getSize().width, toolbar.getSize().height);
 	}
 
 	public Canvas getCanvas() {
@@ -82,12 +78,6 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
     {
 
         timeLabel.setText(Integer.toString(elapsedTime));
-        /*if(currentTime>0)
-        {
-            currentTime-=1;
-            timeLabel.setText(Integer.toString(currentTime));
-
-        }*/
 
     }
 }

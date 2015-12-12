@@ -10,7 +10,7 @@ public class GuessBoxPanel extends WordPanel {
 
     public GuessBoxPanel()
     {
-        setSize(360,100);
+        setSize(350,100);
         setBackground(Color.WHITE);
     }
 }
