@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class GuessBoxPanel extends WordPanel {
 
-    public GuessBoxPanel()
+    public GuessBoxPanel(Dimension size)
     {
         setSize(350,100);
         setBackground(Color.WHITE);
