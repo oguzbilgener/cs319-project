@@ -14,7 +14,7 @@ public class WatchPanel extends PlayPanel {
 
 	public WatchPanel(Dimension size) {
 		super(size);
-		setBackground(Color.yellow);
+		//setBackground(Color.yellow);
 
 
 	/*	setTimeLabel(new JLabel());

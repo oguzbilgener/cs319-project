@@ -25,7 +25,7 @@ public class BrushButton extends JPanel {
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.white);
 		g.fillRect(0, 0, size.width, size.height);
-		g.setColor(Color.black);
+		g.setColor(Color.gray);
 		g.fillOval(size.width/2 - brushSize, size.width/2 - brushSize, brushSize*2, brushSize*2);
 	}
 
