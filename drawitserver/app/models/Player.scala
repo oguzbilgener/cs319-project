@@ -18,8 +18,8 @@ object Player {
     DB.withConnection { implicit connection =>
       SQL("SELECT * FROM Player WHERE username = {uname}")
         .on("uname" -> uname)
-        .as(playerMapping *
-        ).headOption
+        .as(playerMapping *)
+        .headOption
     }
   }
 

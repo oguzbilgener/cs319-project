@@ -6,6 +6,7 @@
 GET     /                           controllers.Application.index
 POST    /v1/login                   controllers.PlayerController.login
 POST    /v1/signup                  controllers.PlayerController.signup
+GET     /v1/player/:name            controllers.PlayerController.lookup(name)
 
 GET     /v1/words                   controllers.WordController.getRandomWords
 

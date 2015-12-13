@@ -52,6 +52,12 @@ class PlayerController extends Controller {
     )
   }
 
-  def lookup = null
-
+  def lookup(name: String) = Action { implicit request =>
+    Player.withUsername(name) match {
+      case Some(p) =>
+        Ok(Json.obj("addresses" -> p.addresses, "preferredAddress" -> p.preferredAddress))
+      case _ =>
+        Response.NotFound("no such player")
+    }
+  }
 }
