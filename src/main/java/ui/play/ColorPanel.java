@@ -23,6 +23,9 @@ public class ColorPanel extends SelectorPanel {
 			if (isInteractionAllowed()) {
 				colors[i].addMouseListener(this);
 			}
+            else {
+                colors[i].setDisabled(true);
+            }
 		}
 		super.placeItems();
 	}

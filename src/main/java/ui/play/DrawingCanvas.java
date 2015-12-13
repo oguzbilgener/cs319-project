@@ -3,10 +3,18 @@ package ui.play;
 import controller.GameController;
 import model.Piece;
 
+import java.awt.*;
+
 /**
  * @author oguzb
  */
 public class DrawingCanvas extends Canvas {
+
+	public DrawingCanvas() {
+		super();
+		setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+	}
+
 	@Override
 	protected boolean isInteractionAllowed() {
 		return true;

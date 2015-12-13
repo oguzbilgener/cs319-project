@@ -23,7 +23,7 @@ public class WatchPanel extends PlayPanel {
 	}
 
 	public void addPiece(Piece piece) {
-		canvas.addPiece(piece);
+		canvas.receivePiece(piece);
 	}
 
 	@Override

@@ -9,11 +9,16 @@ import java.awt.*;
 public class ColorSwatch extends JPanel {
 
 	protected Color color;
+    protected Color grayscaleColor;
 	protected String name;
+	private boolean disabled;
 
 	protected ColorSwatch(Dimension size, Color color, String name) {
 		this.color = color;
+        int gval = (color.getRed() + color.getGreen() + color.getBlue())/3;
+        this.grayscaleColor = new Color(gval, gval, gval);
 		this.name = name;
+		this.disabled = false;
 		setSize(size);
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
@@ -27,10 +32,23 @@ public class ColorSwatch extends JPanel {
         return name;
     }
 
-    @Override
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(this.color);
+        if(isDisabled()) {
+            g.setColor(grayscaleColor);
+        }
+        else {
+            g.setColor(color);
+        }
 		g.fillRect(0,0,getSize().width,getSize().height);
 	}
 

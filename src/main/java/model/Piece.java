@@ -1,10 +1,8 @@
 package model;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
