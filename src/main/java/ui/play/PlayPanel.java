@@ -31,12 +31,14 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
 
 		BrushPanel brushPanel = initializeBrushPanel(new Dimension(64, 96));
 		add(brushPanel);
-		brushPanel.setBounds(396, 360, brushPanel.getSize().width, brushPanel.getSize().height);
 
-        guessBox= new GuessBoxPanel();
+		brushPanel.setBounds(396, 360, brushPanel.getSize().width, brushPanel.getSize().height);
+		//////////////////
+        guessBox= new GuessBoxPanel(new Dimension(350,100));
+		///guessBox.intializeWordPanel(new Dimension(350,100));
         add(guessBox);
         guessBox.setBounds(canvas.getX(),canvas.getY()+canvas.getHeight()+10, guessBox.getWidth(), guessBox.getHeight() );
-
+		//////////////////
         timeLabel= new JLabel();
         add(timeLabel);
         timeLabel.setBounds(canvas.getX(), guessBox.getY()+guessBox.getHeight()+5, 25,25);
@@ -45,6 +47,8 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
 		ActionToolbar toolbar = initializeActionToolbar(new Dimension(100,100));
 		add(toolbar);
 		toolbar.setBounds(365,470, toolbar.getSize().width, toolbar.getSize().height);
+
+
 	}
 
 	public Canvas getCanvas() {
