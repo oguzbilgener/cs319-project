@@ -318,6 +318,7 @@ public class P2PManager implements Observer {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    socketIn = null;
                 }
             }
         }
@@ -329,7 +330,7 @@ public class P2PManager implements Observer {
             super.run();
             while(true) {
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(16);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -3,6 +3,7 @@ package controller;
 import model.GameSession;
 import model.Piece;
 import model.Player;
+import network.GameClient;
 import network.P2PManager;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ui.GameWindow;
@@ -15,16 +16,18 @@ import java.util.Observer;
 /**
  * @author oguzb
  */
-public class GameController implements Observer, P2PManager.P2PConnectionListener {
+public class GameController implements Observer, P2PManager.P2PConnectionListener,
+    GameClient.GameClientListener {
 
 	protected GameWindow window;
-	// Used by static mainWindow() method. See below for the purpose
+	// Used by static game() method. See below for the purpose
 	private static GameController staticGameInstance;
 
 	private GameSession session;
 	private GameStateController activeController;
 
 	private P2PManager p2pManager;
+	private GameClient gameClient;
 
 	public void createAndShowGUI() {
 		//Create and set up the window.
@@ -43,8 +46,6 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 			switch (itemType) {
 				case host:
 					showHostScreen();
-					// setupNewGame();
-//					chooseWord();
 					break;
 				case join:
 					showJoinScreen();
@@ -61,11 +62,11 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 
 		window.showMainMenu(menuListener);
 
-        // TODO: initialize this after we logged in
-        Player ownPlayer = new Player();
-        ownPlayer.setUsername("oguz");
-        ownPlayer.setPreferredAddress("192.168.2.200");
-        p2pManager = new P2PManager(ownPlayer, this);
+
+        // TODO: login from account store
+        gameClient = new GameClient();
+        gameClient.login("oguz", "opass");
+        gameClient.addListener(this);
 	}
 
 	private void showHostScreen() {
@@ -85,11 +86,8 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 		session.setRoundState(GameSession.RoundState.CHOOSE_WORD);
 	}
 
-    public void joinPlayer(String ipAddress) {
-        Player hostPlayer = new Player();
-        hostPlayer.setPreferredAddress(ipAddress);
-        hostPlayer.setAddresses(new String[]{ipAddress});
-        p2pManager.join(hostPlayer);
+    public void joinPlayer(String username) {
+        gameClient.lookup(username);
     }
 
 	private void setupNewGame() {
@@ -167,6 +165,10 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
         return p2pManager;
     }
 
+    public GameClient getGameClient() {
+        return gameClient;
+    }
+
     @Override
 	public void onConnected() {
         System.out.println("GC connected");
@@ -211,4 +213,51 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 	public void onError(Exception exception) {
         System.out.println("GC error");
 	}
+
+    @Override
+    public void onLoginFailure(GameClient.ErrorType type) {
+
+    }
+
+    @Override
+    public void onSignupFailure(GameClient.ErrorType type) {
+
+    }
+
+    @Override
+    public void onLookupFailure(GameClient.ErrorType type) {
+        System.out.println("lookup error "+type);
+    }
+
+    @Override
+    public void onLoadWordsFailure(GameClient.ErrorType type) {
+        System.out.println("load words error "+type);
+    }
+
+    @Override
+    public void onLoginSuccess(Player player) {
+        // TODO: use parameter player
+        Player ownPlayer = new Player();
+        ownPlayer.setUsername("oguz2");
+        ownPlayer.setPreferredAddress("192.168.2.200");
+        p2pManager = new P2PManager(ownPlayer, this);
+    }
+
+    @Override
+    public void onSignupSuccess(Player player) {
+
+    }
+
+    @Override
+    public void onLookupSuccess(Player player) {
+        p2pManager.join(player);
+    }
+
+    @Override
+    public void onLoadWordsSuccess(String[] words) {
+        for (String word : words) {
+            System.out.print(word);
+        }
+        session.setWordList(words);
+    }
 }

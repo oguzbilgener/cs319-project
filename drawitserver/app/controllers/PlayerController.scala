@@ -25,7 +25,7 @@ class PlayerController extends Controller {
         Player.fromLoginPlayer(loginPlayer) match {
           case None => Response.NotFound("no such user")
           case Some(p) =>
-            p.updateAddresses(loginPlayer)
+            p.updateAddresses(loginPlayer, request.remoteAddress)
             Response.Ok("logged in")
         }
       },
@@ -40,7 +40,7 @@ class PlayerController extends Controller {
       valid = { loginPlayer =>
         Player.fromLoginPlayer(loginPlayer) match {
           case None =>
-            Player.fromSignupPlayer(loginPlayer).signup()
+            Player.fromSignupPlayer(loginPlayer).signup(request.remoteAddress)
             Response.Ok("signed up")
           case Some(p) =>
             Response.BadRequest("user "+loginPlayer.username+" already exists.")

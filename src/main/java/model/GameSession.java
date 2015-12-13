@@ -33,8 +33,8 @@ public class GameSession extends Observable {
 		this.roundState = isMyPlayerActive ? RoundState.DRAW : RoundState.WATCH;
 		this.color = ColorSwatch.create(1, new Dimension(0,0)).getColor(); // Default color is black
 		this.brushSize = BrushButton.create(0, new Dimension(0,0)).getBrushSize(); // Default brush is the smallest.
-        this.wordList = new String[]{"oguz","cem","gorkem"};
-        this.chosenWord=null;
+        this.wordList = new String[3];
+        this.chosenWord = null;
 
 	}
 

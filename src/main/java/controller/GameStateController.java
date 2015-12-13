@@ -9,9 +9,13 @@ import ui.GameWindow;
 public abstract class GameStateController {
 
 	public GameStateController(GameWindow window) {
-		GameStatePanel panel = initializePanel();
-		window.replacePanel(panel);
+		recreatePanel();
 	}
+
+	protected void recreatePanel() {
+        GameStatePanel panel = initializePanel();
+        GameController.game().getWindow().replacePanel(panel);
+    }
 
 	abstract GameStatePanel initializePanel();
 }

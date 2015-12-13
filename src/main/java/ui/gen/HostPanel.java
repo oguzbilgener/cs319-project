@@ -1,6 +1,7 @@
 
 package ui.gen;
 
+import controller.GameController;
 import ui.GameStatePanel;
 
 import java.awt.*;
@@ -46,11 +47,7 @@ public class HostPanel extends GameStatePanel {
         usernameLabel.setText("Your username is:");
 
         userText.setEditable(false);
-        try {
-            userText.setText(InetAddress.getLocalHost().toString());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        userText.setText(GameController.game().getP2pManager().getOwnPlayer().getUsername());
         userText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userTextActionPerformed(evt);
