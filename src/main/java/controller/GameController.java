@@ -205,12 +205,12 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 
     @Override
 	public void onConnected() {
-        System.out.println("GC connected");
+        System.out.println("Socket connected");
 	}
 
 	@Override
 	public void onGuestIdentified(Player guest) {
-        System.out.println("GC identified");
+        System.out.println("Socket player identified");
         if(session == null) {
             setupNewGame();
         }
@@ -235,17 +235,18 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 
     @Override
 	public void onHostConnectionRefused() {
-        System.out.println("GC refused");
+        System.out.println("Socket refused");
 	}
 
 	@Override
 	public void onDisconnected() {
-        System.out.println("GC disconnected");
+        System.out.println("Socket disconnected");
+        window.showMainMenu(menuListener);
 	}
 
 	@Override
 	public void onError(Exception exception) {
-        System.out.println("GC error");
+        System.out.println("Socket error");
 	}
 
     @Override

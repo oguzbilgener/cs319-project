@@ -115,7 +115,7 @@ public class P2PManager implements Observer {
                     identified(jsonStr);
                 }
                 else {
-                    identifyRequested();
+                    identifyRequested(jsonStr);
                 }
                 break;
             case DRAW:
@@ -162,7 +162,7 @@ public class P2PManager implements Observer {
 
         Timer timer = new Timer(1000, (e) -> {
             if(selfIsHost) {
-                sendMessage(new Message(MessageType.IDENTIFY));
+                sendMessage(new Message(MessageType.IDENTIFY, ownPlayer));
             }
         });
         timer.setRepeats(false);
@@ -198,9 +198,17 @@ public class P2PManager implements Observer {
         }
     }
 
-    public void identifyRequested() {
+    public void identifyRequested(String jsonStr) {
         System.out.println("identify requested");
-        sendMessage(new Message(MessageType.IDENTIFY, ownPlayer));
+        try {
+            Player host = Player.fromMessageJson(jsonStr);
+            System.out.println("found host: " + host.getUsername());
+            otherPlayer = host;
+            sendMessage(new Message(MessageType.IDENTIFY, ownPlayer));
+        }
+        catch(NullPointerException e) {
+            System.out.println("identification failed!!");
+        }
     }
 
     public void sendPiece(Piece piece) {
@@ -319,6 +327,7 @@ public class P2PManager implements Observer {
                 } catch (IOException e) {
                     e.printStackTrace();
                     socketIn = null;
+                    SwingUtilities.invokeLater(() -> messageReceived(new Message(MessageType.DISCONNECT)));
                 }
             }
         }

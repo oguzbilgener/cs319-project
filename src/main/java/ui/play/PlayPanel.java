@@ -15,7 +15,7 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
 	private Canvas canvas;
 	protected JLabel timeLabel;
     private int currentTime;
-    private GuessBoxPanel guessBox;
+    private WordPanel wordBox;
 
 	public PlayPanel(Dimension size) {
 		super(size);
@@ -33,20 +33,17 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
 		add(brushPanel);
 
 		brushPanel.setBounds(396, 360, brushPanel.getSize().width, brushPanel.getSize().height);
-		//////////////////
-        guessBox= new GuessBoxPanel(new Dimension(350,100));
-		///guessBox.intializeWordPanel(new Dimension(350,100));
-        add(guessBox);
-        guessBox.setBounds(canvas.getX(),canvas.getY()+canvas.getHeight()+10, guessBox.getWidth(), guessBox.getHeight() );
-		//////////////////
+		wordBox = initializeWordPanel(new Dimension(360,100));
+        add(wordBox);
+		wordBox.setBounds(canvas.getX(),canvas.getY()+canvas.getHeight()+10, wordBox.getWidth(), wordBox.getHeight() );
         timeLabel= new JLabel();
         add(timeLabel);
-        timeLabel.setBounds(canvas.getX(), guessBox.getY()+guessBox.getHeight()+5, 25,25);
+        timeLabel.setBounds(canvas.getX(), wordBox.getY()+wordBox.getHeight()+5, 25,25);
         timeLabel.setText("45");
 
 		ActionToolbar toolbar = initializeActionToolbar(new Dimension(100,100));
 		add(toolbar);
-		toolbar.setBounds(365,470, toolbar.getSize().width, toolbar.getSize().height);
+		toolbar.setBounds(396,470, toolbar.getSize().width, toolbar.getSize().height);
 
 
 	}

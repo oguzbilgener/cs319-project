@@ -46,11 +46,10 @@ public class WatchPanel extends PlayPanel {
 
 	@Override
 	protected WordPanel initializeWordPanel(Dimension size) {
-		return null;
+		return new WatchInfoPanel(size);
 	}
 
 	@Override
-
 	protected ActionToolbar initializeActionToolbar(Dimension size) {
 		ActionButton button1 = ActionButton.createGiveUpButton(new Dimension(size.width/2, size.height));
 		ActionButton button2 = ActionButton.createCloseButton(new Dimension(size.width/2, size.height));

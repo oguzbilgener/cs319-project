@@ -34,7 +34,7 @@ public class WordDrawPanel extends PlayPanel {
 
 	@Override
 	protected WordPanel initializeWordPanel(Dimension size) {
-		return null;
+		return new WordInfoPanel(size);
 	}
 
 	@Override
