@@ -2,7 +2,7 @@
 # --- !Ups
 CREATE TABLE Player (
   id serial,
-  username varchar(256),
+  username varchar(256) UNIQUE,
   password varchar(256),
   highscore int,
   preferred_address varchar(256),
@@ -18,3 +18,4 @@ CREATE TABLE Word (
   content varchar(32)
 );
 # --- !Downs
+DROP TABLE Word;

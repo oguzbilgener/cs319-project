@@ -38,7 +38,7 @@ class PlayerController extends Controller {
   def signup = Action(parse.json) { implicit request =>
     request.body.validate[LoginPlayer].fold(
       valid = { loginPlayer =>
-        Player.fromLoginPlayer(loginPlayer) match {
+        Player.withUsername(loginPlayer.username) match {
           case None =>
             Player.fromSignupPlayer(loginPlayer).signup(request.remoteAddress)
             Response.Ok("signed up")

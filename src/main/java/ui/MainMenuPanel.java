@@ -1,6 +1,7 @@
 
 package ui;
 
+import controller.GameController;
 import ui.event.MenuEvent;
 
 import javax.swing.*;
@@ -12,12 +13,11 @@ import java.awt.*;
  */
 public class MainMenuPanel extends JPanel {
 
-    
-
-       // Variables declaration
     private JButton hostGameButton;
     private JButton joinGameButton;
     private JButton logoutButton;
+    private JButton loginButton;
+    private JButton signupButton;
     private JButton creditsButton;
 
     /**
@@ -56,22 +56,42 @@ public class MainMenuPanel extends JPanel {
         menuWrapper.add(hostGameButton);
         menuWrapper.add(joinGameButton);
         menuWrapper.add(creditsButton);
+
+
+        if(!GameController.game().isLoggedIn()) {
+            hostGameButton.setEnabled(false);
+            joinGameButton.setEnabled(false);
+        }
         add(menuWrapper, BorderLayout.CENTER);
     }
 
     private void addBottomPanel() {
         JPanel bottomWrapper = new JPanel();
         JLabel accountStatusLabel = new JLabel();
-        logoutButton = new JButton();
 
-        accountStatusLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        accountStatusLabel.setText("signed in as XXX");
+        String accountStatusText = "Sign in to start playing.";
+        if(GameController.game().isLoggedIn()) {
+            accountStatusText = "Signed in as "+GameController.game().getLoggedInPlayer().getUsername();
 
-        logoutButton.setText("LOG OUT");
-        logoutButton.setBackground(Color.white);
+            logoutButton = new JButton();
+            logoutButton.setText("Sign out");
+            logoutButton.setBackground(Color.white);
+            bottomWrapper.add(logoutButton);
+        }
+        else {
+            loginButton = new JButton();
+            loginButton.setText("Sign in");
+            bottomWrapper.add(loginButton);
+
+            signupButton = new JButton();
+            signupButton.setText("Sign up");
+            bottomWrapper.add(signupButton);
+        }
+
+        accountStatusLabel.setFont(new java.awt.Font("Tahoma", 0, 14));
+        accountStatusLabel.setText(accountStatusText);
 
         bottomWrapper.add(accountStatusLabel);
-        bottomWrapper.add(logoutButton);
         add(bottomWrapper, BorderLayout.SOUTH);
     }
 
@@ -82,7 +102,17 @@ public class MainMenuPanel extends JPanel {
 
         creditsButton.addActionListener(event -> listener.onMenuEvent(MenuEvent.ItemType.credits));
 
-        logoutButton.addActionListener(event -> listener.onMenuEvent(MenuEvent.ItemType.logout));
+        if(loginButton != null) {
+            loginButton.addActionListener(event -> listener.onMenuEvent(MenuEvent.ItemType.login));
+        }
+
+        if(signupButton != null) {
+            signupButton.addActionListener(event -> listener.onMenuEvent(MenuEvent.ItemType.signup));
+        }
+
+        if(logoutButton != null) {
+            logoutButton.addActionListener(event -> listener.onMenuEvent(MenuEvent.ItemType.logout));
+        }
 
     }
 

@@ -172,7 +172,7 @@ public class GameClient {
                         JsonArray wordsArray = parser.parse(jsonStr).getAsJsonArray();
                         String[] words = new String[wordsArray.size()];
                         for(int i=0;i<wordsArray.size();i++) {
-                            words[i] = wordsArray.get(i).getAsString();
+                            words[i] = wordsArray.get(i).getAsString().toUpperCase();
                         }
                         listeners.forEach(l -> l.onLoadWordsSuccess(words));
                         break;

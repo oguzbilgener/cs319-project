@@ -1,6 +1,7 @@
 
 package ui.gen;
 
+import controller.GameController;
 import ui.GameStatePanel;
 
 import java.awt.*;
@@ -60,6 +61,7 @@ public class SignUpPanel extends GameStatePanel {
         });
 
         signUpButton.setText("Sign Up");
+        signUpButton.addActionListener(this::signUpButtonActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -105,6 +107,10 @@ public class SignUpPanel extends GameStatePanel {
     private void usernameTextActionPerformed(java.awt.event.ActionEvent evt) {
     }
     private void passTextActionPerformed(java.awt.event.ActionEvent evt) {
+    }
+
+    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        GameController.game().getGameClient().signup(usernameText.getText().trim(), passText.getText().trim());
     }
     
 }

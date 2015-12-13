@@ -30,7 +30,6 @@ public class CreditsPanel extends GameStatePanel {
     
     @SuppressWarnings("unchecked")
     private void initComponents() {
-
         projectLabel = new javax.swing.JLabel();
         gorkemLabel = new javax.swing.JLabel();
         oguzLabel = new javax.swing.JLabel();

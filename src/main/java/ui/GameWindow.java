@@ -2,9 +2,7 @@
 package ui;
 
 import ui.event.MenuEvent;
-import ui.gen.CreditsPanel;
-import ui.gen.HostPanel;
-import ui.gen.JoinPanel;
+import ui.gen.*;
 
 import java.awt.*;
 import javax.swing.*;
@@ -48,6 +46,14 @@ public class GameWindow extends JFrame {
 	public void showCreditsPanel() {
 		replacePanel(new CreditsPanel(getContentSize()));
 	}
+
+	public void showLoginPanel() {
+		replacePanel(new SignInPanel(getContentSize()));
+	}
+
+    public void showSignupPanel() {
+        replacePanel(new SignUpPanel(getContentSize()));
+    }
 
 	public void replacePanel(Component component) {
 		getContentPane().removeAll();

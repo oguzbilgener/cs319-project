@@ -1,6 +1,8 @@
 
 package ui.gen;
 
+import controller.GameController;
+import network.GameClient;
 import ui.GameStatePanel;
 
 import java.awt.*;
@@ -60,11 +62,7 @@ public class SignInPanel extends GameStatePanel {
         });
 
         signInButton.setText("Sign In");
-        signInButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signInButtonActionPerformed(evt);
-            }
-        });
+        signInButton.addActionListener(this::signInButtonActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -114,6 +112,7 @@ public class SignInPanel extends GameStatePanel {
     }
 
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        GameController.game().getGameClient().login(usernameText.getText(), passText.getText());
     }
 
 }

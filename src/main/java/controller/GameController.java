@@ -3,9 +3,9 @@ package controller;
 import model.GameSession;
 import model.Piece;
 import model.Player;
+import network.AccountStore;
 import network.GameClient;
 import network.P2PManager;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ui.GameWindow;
 import ui.event.MenuEvent;
 
@@ -29,7 +29,9 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 	private P2PManager p2pManager;
 	private GameClient gameClient;
 
-	public void createAndShowGUI() {
+    private MenuEvent.Listener menuListener;
+
+    public void createAndShowGUI() {
 		//Create and set up the window.
 		window = new GameWindow();
 		staticGameInstance = this;
@@ -42,7 +44,7 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 
-		MenuEvent.Listener menuListener = itemType -> {
+		menuListener = itemType -> {
 			switch (itemType) {
 				case host:
 					showHostScreen();
@@ -54,19 +56,25 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 					showCreditsScreen();
 					break;
 				case login:
-					throw new NotImplementedException();
+					showLoginScreen();
+                    break;
+                case signup:
+                    showSignupScreen();
+                    break;
 				case logout:
-					throw new NotImplementedException();
+					logout();
+                    break;
 			}
 		};
 
 		window.showMainMenu(menuListener);
 
-
-        // TODO: login from account store
         gameClient = new GameClient();
-        gameClient.login("oguz", "opass");
         gameClient.addListener(this);
+        Player storedPlayer = AccountStore.retrieve();
+        if(storedPlayer != null) {
+            gameClient.login(storedPlayer.getUsername(), storedPlayer.getPassword());
+        }
 	}
 
 	private void showHostScreen() {
@@ -81,6 +89,21 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 	private void showCreditsScreen() {
 		window.showCreditsPanel();
 	}
+
+    private void showLoginScreen() {
+        window.showLoginPanel();
+    }
+
+    private void showSignupScreen() {
+        window.showSignupPanel();
+    }
+
+    private void logout() {
+        AccountStore.logout();
+        p2pManager = null;
+        // recreate the menu
+        window.showMainMenu(menuListener);
+    }
 
 	private void chooseWord() {
 		session.setRoundState(GameSession.RoundState.CHOOSE_WORD);
@@ -169,6 +192,17 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
         return gameClient;
     }
 
+    public boolean isLoggedIn() {
+        return p2pManager != null;
+    }
+
+    public Player getLoggedInPlayer() {
+        if(p2pManager != null) {
+            return p2pManager.getOwnPlayer();
+        }
+        return null;
+    }
+
     @Override
 	public void onConnected() {
         System.out.println("GC connected");
@@ -216,12 +250,14 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 
     @Override
     public void onLoginFailure(GameClient.ErrorType type) {
-
+        if(activeController == null) {
+            window.showMainMenu(menuListener);
+        }
     }
 
     @Override
     public void onSignupFailure(GameClient.ErrorType type) {
-
+        window.showMainMenu(menuListener);
     }
 
     @Override
@@ -236,16 +272,16 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 
     @Override
     public void onLoginSuccess(Player player) {
-        // TODO: use parameter player
-        Player ownPlayer = new Player();
-        ownPlayer.setUsername("oguz2");
-        ownPlayer.setPreferredAddress("192.168.2.200");
-        p2pManager = new P2PManager(ownPlayer, this);
+        p2pManager = new P2PManager(player, this);
+        window.showMainMenu(menuListener);
+        AccountStore.store(player);
     }
 
     @Override
     public void onSignupSuccess(Player player) {
-
+        p2pManager = new P2PManager(player, this);
+        window.showMainMenu(menuListener);
+        AccountStore.store(player);
     }
 
     @Override

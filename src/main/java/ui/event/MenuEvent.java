@@ -6,7 +6,7 @@ package ui.event;
 public class MenuEvent {
 
 	public enum ItemType {
-		host, join, credits, login, logout
+		host, join, credits, signup, login, logout
 	}
 
 	ItemType itemType;
