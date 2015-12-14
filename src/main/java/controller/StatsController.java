@@ -2,6 +2,7 @@ package controller;
 
 import ui.GameStatePanel;
 import ui.GameWindow;
+import ui.play.StatsPanel;
 
 /**
  * @author oguzb
@@ -14,6 +15,8 @@ public class StatsController extends GameStateController {
 
 	@Override
 	GameStatePanel initializePanel() {
-		return null;
+		StatsPanel panel = new StatsPanel((GameController.game().getWindow().getContentSize()));
+        turnTimer.schedule(15);
+        return panel;
 	}
 }

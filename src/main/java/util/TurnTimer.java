@@ -13,12 +13,9 @@ public class TurnTimer {
     private Timer timer;
     private int count;
     private Set<TimerListener> listeners;
-    private final static int TIME_LIMIT = 0;
-    //Timer timer;
 
     public TurnTimer ()
     {
-        //timer= new Timer();
         listeners = new HashSet<>();
     }
 
@@ -26,14 +23,16 @@ public class TurnTimer {
         listeners.add(listener);
     }
 
-    public void schedule()
-    {
-        count=45;
+    public void schedule() {
+        schedule(12);
+    }
+
+    public void schedule(int countStart) {
+        count = countStart;
         TimerTask timerT = new TimerTask() {
             @Override
             public void run() {
                 count--;
-                System.out.println(count);
                 for(TimerListener listener: listeners) {
                     listener.onTick(count);
                     if(count==0) {
@@ -49,6 +48,12 @@ public class TurnTimer {
         timer.scheduleAtFixedRate(timerT, 1000, 1000);
 
 
+    }
+
+    public void cancel() {
+        if(timer != null) {
+            timer.cancel();
+        }
     }
 
 }

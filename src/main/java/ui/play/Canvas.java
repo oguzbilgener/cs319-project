@@ -129,14 +129,25 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
                 }
             }
         };
-        long rate = Math.abs((currentPiece.getEndTime()-currentPiece.getStartTime())/(currentPiece.getPoints().size()));
-        timer.scheduleAtFixedRate(animTask, 0, rate);
+        long rate = (long) Math.ceil((currentPiece.getEndTime()-currentPiece.getStartTime())/(currentPiece.getPoints().size()));
+        if(rate > 0) {
+            timer.scheduleAtFixedRate(animTask, 0, rate);
+        }
     }
 
     protected void onCurrentPieceAnimationEnd() {
         currentPiecePosition = -1;
         addPiece(currentPiece);
 
+    }
+
+	public List<Piece> getPieces() {
+		return pieces;
+	}
+
+    public void setPieces(List<Piece> pieces) {
+        this.pieces = pieces;
+        repaint();
     }
 
 	@Override

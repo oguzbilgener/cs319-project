@@ -10,16 +10,13 @@ import java.awt.*;
  */
 public class WordInfoPanel extends WordPanel {
 
-    private String word;
-
-
 
     public WordInfoPanel(Dimension size) {
             setSize(size);
             setBackground(Color.WHITE);
             setLayout(null);
 
-            word= GameController.game().getSession().getChosenWord();
+        String word = GameController.game().getSession().getChosenWord();
 
             JLabel label= new JLabel("you are drawing...");
             add(label);

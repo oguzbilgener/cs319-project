@@ -8,8 +8,10 @@ import network.GameClient;
 import network.P2PManager;
 import ui.GameWindow;
 import ui.event.MenuEvent;
+import util.TimerListener;
 
 import javax.swing.*;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,7 +19,7 @@ import java.util.Observer;
  * @author oguzb
  */
 public class GameController implements Observer, P2PManager.P2PConnectionListener,
-    GameClient.GameClientListener {
+    GameClient.GameClientListener, TimerListener {
 
 	protected GameWindow window;
 	// Used by static game() method. See below for the purpose
@@ -30,6 +32,8 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 	private GameClient gameClient;
 
     private MenuEvent.Listener menuListener;
+
+    private List<Piece> finishedDrawing;
 
     public void createAndShowGUI() {
 		//Create and set up the window.
@@ -134,6 +138,9 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 			if(data != null && data instanceof GameSession.Field) {
 				GameSession.Field field = (GameSession.Field) data;
 				if(field.name == GameSession.Field.Name.ROUND_STATE) {
+                    if(activeController != null) {
+                        activeController.onRemove();
+                    }
 					// Begin new state, replace active controller
 					switch (session.getRoundState()) {
 						case DRAW:
@@ -143,10 +150,10 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 							activeController = new WatchController(window);
 							break;
 						case GUESS:
-							activeController = new GuessWordController(window);
+							activeController = new GuessWordController(window, finishedDrawing);
 							break;
 						case WAIT:
-							activeController = new WaitController(window);
+							activeController = new WaitController(window, finishedDrawing);
 							break;
 						case STATS:
 							activeController = new StatsController(window);
@@ -155,6 +162,7 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 							activeController = new ChooseWordController(window);
 							break;
 					}
+                    activeController.getTurnTimer().addListener(this);
 				}
 				else if(field.name == GameSession.Field.Name.CHOSEN_WORD) {
 					beginDrawOrWatch();
@@ -203,6 +211,10 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
         return null;
     }
 
+    /**
+     * P2PManager Events
+     */
+
     @Override
 	public void onConnected() {
         System.out.println("Socket connected");
@@ -248,6 +260,27 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 	public void onError(Exception exception) {
         System.out.println("Socket error");
 	}
+
+	@Override
+	public void onDrawFinished() {
+        finishedDrawing = ((WatchController) activeController).getCanvas().getPieces();
+        session.setRoundState(GameSession.RoundState.GUESS);
+	}
+
+    @Override
+    public void onGuessingFinished() {
+        session.setRoundState(GameSession.RoundState.STATS);
+    }
+
+    @Override
+    public void onNextRoundRequested() {
+        // TODO
+        System.out.println("next round requested, switch roles!!");
+    }
+
+    /**
+     * GameClient Events
+     */
 
     @Override
     public void onLoginFailure(GameClient.ErrorType type) {
@@ -296,5 +329,27 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
             System.out.print(word);
         }
         session.setWordList(words);
+    }
+
+    @Override
+    public void onTimeOut() {
+        System.out.println("GC timeout");
+        if(session.getRoundState() == GameSession.RoundState.DRAW) {
+            finishedDrawing = ((WordDrawController)activeController).getCanvas().getPieces();
+            p2pManager.finishDrawing();
+            session.setRoundState(GameSession.RoundState.WAIT);
+        }
+        else if(session.getRoundState() == GameSession.RoundState.GUESS) {
+            p2pManager.failGuessing();
+            session.setRoundState(GameSession.RoundState.STATS);
+        }
+        else if(session.getRoundState() == GameSession.RoundState.STATS && p2pManager.isSelfHost()) {
+
+        }
+    }
+
+    @Override
+    public void onTick(int elapsedTime) {
+        System.out.println("GC tick "+session.getRoundState());
     }
 }

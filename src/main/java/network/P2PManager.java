@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -40,9 +39,10 @@ public class P2PManager implements Observer {
         IDENTIFY,
         WORD_CHOSEN,
         DRAW,
-        GUESS_LETTER,
+        DRAW_FINISH,
         WORD_GUESSED,
-        TIMEOUT
+        GUESS_FAILED,
+        NEXT_ROUND
     }
 
     public P2PManager(Player ownPlayer, P2PConnectionListener listener) {
@@ -99,6 +99,26 @@ public class P2PManager implements Observer {
         }
     }
 
+    public void sendPiece(Piece piece) {
+        sendMessage(new Message(MessageType.DRAW, piece));
+    }
+
+    public void finishDrawing() {
+        sendMessage(new Message(MessageType.DRAW_FINISH));
+    }
+
+    public void failGuessing() {
+        sendMessage(new Message(MessageType.GUESS_FAILED));
+    }
+
+    public void accomplishGuessing() {
+        sendMessage(new Message(MessageType.WORD_GUESSED));
+    }
+
+    /**
+     * Internal Interface
+     */
+
     private void messageReceived(Message message, String jsonStr) {
         switch(message.getType()) {
             case CONNECT:
@@ -121,16 +141,20 @@ public class P2PManager implements Observer {
             case DRAW:
                 pieceDrawn(message, jsonStr);
                 break;
-            case WORD_CHOSEN:
-                if(listener != null) {
-                    listener.onWordChosen(message.content.toString());
-                }
+            case DRAW_FINISH:
+                drawFinished();
                 break;
-            case GUESS_LETTER:
+            case WORD_CHOSEN:
+                wordChosen(message);
                 break;
             case WORD_GUESSED:
+                guessAccomplished();
                 break;
-            case TIMEOUT:
+            case GUESS_FAILED:
+                guessFailed();
+                break;
+            case NEXT_ROUND:
+                beginNextRound();
                 break;
         }
     }
@@ -143,7 +167,7 @@ public class P2PManager implements Observer {
         messageQueue.add(message);
     }
 
-    public void connected(String address) {
+    private void connected(String address) {
         System.out.println("Connected to "+address);
         if(listener != null) {
             listener.onConnected();
@@ -170,21 +194,21 @@ public class P2PManager implements Observer {
 
     }
 
-    public void disconnected() {
+    private void disconnected() {
         System.out.println("disconnected!");
         if(listener != null) {
             listener.onDisconnected();
         }
     }
 
-    public void refused() {
+    private void refused() {
         System.out.println("refused!");
         if(listener != null) {
             listener.onHostConnectionRefused();
         }
     }
 
-    public void identified(String jsonStr) {
+    private void identified(String jsonStr) {
         try {
             Player guest = Player.fromMessageJson(jsonStr);
             System.out.println("identified " + guest.getUsername());
@@ -198,7 +222,7 @@ public class P2PManager implements Observer {
         }
     }
 
-    public void identifyRequested(String jsonStr) {
+    private void identifyRequested(String jsonStr) {
         System.out.println("identify requested");
         try {
             Player host = Player.fromMessageJson(jsonStr);
@@ -211,11 +235,13 @@ public class P2PManager implements Observer {
         }
     }
 
-    public void sendPiece(Piece piece) {
-        sendMessage(new Message(MessageType.DRAW, piece));
+    private void wordChosen(Message message) {
+        if(listener != null) {
+            listener.onWordChosen(message.content.toString());
+        }
     }
 
-    public void pieceDrawn(Message message, String jsonObject) {
+    private void pieceDrawn(Message message, String jsonObject) {
         Piece piece = Piece.fromJson(jsonObject);
         System.out.println(piece.getPoints()==null);
         if(listener != null) {
@@ -223,7 +249,31 @@ public class P2PManager implements Observer {
         }
     }
 
-    public class HostListen extends Thread {
+    private void drawFinished() {
+        if(listener != null) {
+            listener.onDrawFinished();
+        }
+    }
+
+    private void guessFailed() {
+        if(listener != null) {
+            listener.onGuessingFinished();
+        }
+    }
+
+    private void guessAccomplished() {
+        if(listener != null) {
+            listener.onGuessingFinished();
+        }
+    }
+
+    private void beginNextRound() {
+        if(listener != null) {
+            listener.onNextRoundRequested();
+        }
+    }
+
+    private class HostListen extends Thread {
 
         private ServerSocket host;
 
@@ -250,7 +300,7 @@ public class P2PManager implements Observer {
         }
     }
 
-    public class GuestConnect extends Thread {
+    private class GuestConnect extends Thread {
 
         private Player hostPlayer;
 
@@ -292,7 +342,7 @@ public class P2PManager implements Observer {
         }
     }
 
-    public class MessageListen extends Thread {
+    private class MessageListen extends Thread {
 
         @Override
         public void run() {
@@ -333,7 +383,7 @@ public class P2PManager implements Observer {
         }
     }
 
-    public class MessageSend extends Thread {
+    private class MessageSend extends Thread {
         @Override
         public void run() {
             super.run();
@@ -341,7 +391,7 @@ public class P2PManager implements Observer {
                 try {
                     Thread.sleep(16);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+
                 }
                 while(!messageQueue.isEmpty()) {
                     Message message = messageQueue.poll();
@@ -400,6 +450,9 @@ public class P2PManager implements Observer {
         void onDisconnected();
         void onWordChosen(String word);
         void onDraw(Piece piece);
+        void onDrawFinished();
+        void onGuessingFinished();
+        void onNextRoundRequested();
         void onError(Exception exception);
     }
 }

@@ -12,7 +12,7 @@ import java.util.Observable;
 public class GameSession extends Observable {
 
 	public enum RoundState {
-		CHOOSE_WORD, DRAW, WATCH, GUESS, WAIT, STATS
+		CHOOSE_WORD, DRAW, WATCH, WAIT, GUESS, STATS
 	}
 
 	protected Player myPlayer;

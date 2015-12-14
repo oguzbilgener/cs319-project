@@ -2,7 +2,6 @@ package ui.play;
 
 import ui.GameStatePanel;
 import util.TimerListener;
-import util.TurnTimer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +13,6 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
 
 	private Canvas canvas;
 	protected JLabel timeLabel;
-    private int currentTime;
-    private WordPanel wordBox;
 
 	public PlayPanel(Dimension size) {
 		super(size);
@@ -33,10 +30,10 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
 		add(brushPanel);
 
 		brushPanel.setBounds(396, 360, brushPanel.getSize().width, brushPanel.getSize().height);
-		wordBox = initializeWordPanel(new Dimension(360,100));
+		WordPanel wordBox = initializeWordPanel(new Dimension(360,100));
         add(wordBox);
 		wordBox.setBounds(canvas.getX(),canvas.getY()+canvas.getHeight()+10, wordBox.getWidth(), wordBox.getHeight() );
-        timeLabel= new JLabel();
+        timeLabel = new JLabel();
         add(timeLabel);
         timeLabel.setBounds(canvas.getX(), wordBox.getY()+wordBox.getHeight()+5, 25,25);
         timeLabel.setText("45");
@@ -61,14 +58,6 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
 	protected abstract WordPanel initializeWordPanel(Dimension size);
 
 	protected abstract ActionToolbar initializeActionToolbar(Dimension size);
-
-	public JLabel getTimeLabel() {
-		return timeLabel;
-	}
-
-	public void setTimeLabel(JLabel timeLabel) {
-		this.timeLabel = timeLabel;
-	}
 
     public void onTimeOut()
     {
