@@ -17,7 +17,7 @@ import java.util.*;
  */
 public class GameClient {
 
-    public static final String HOSTNAME = "localhost:9000";
+    public static final String HOSTNAME = "128.199.60.60:9000";
     public static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
     private OkHttpClient httpClient;
     // Keeping this as a list because we want #0 to be always GameController

@@ -40,7 +40,7 @@ public abstract class PlayPanel extends GameStatePanel implements TimerListener 
         timeLabel.setBounds(canvas.getX(), wordBox.getY()+wordBox.getHeight()+5, 25,25);
         timeLabel.setText("45");
 
-		actionToolbar = initializeActionToolbar(new Dimension(100,100));
+		actionToolbar = initializeActionToolbar(new Dimension(64,100));
 		add(actionToolbar);
         actionToolbar.setBounds(396,470, actionToolbar.getSize().width, actionToolbar.getSize().height);
 

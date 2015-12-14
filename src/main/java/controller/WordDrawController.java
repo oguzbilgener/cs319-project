@@ -21,7 +21,7 @@ public class WordDrawController extends GameStateController {
 	@Override
 	GameStatePanel initializePanel() {
 		ActionListener checkListener = (event) -> {GameController.game().finishDrawing();};
-		ActionListener closeListener = (event) -> {};
+		ActionListener closeListener = (event) -> {GameController.game().disconnect();};
 		panel = new WordDrawPanel(GameController.game().getWindow().getContentSize());
         panel.setActionListeners(checkListener, closeListener);
 		turnTimer.schedule();

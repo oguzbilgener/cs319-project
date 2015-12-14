@@ -16,7 +16,7 @@ public class StatsController extends GameStateController {
 	@Override
 	GameStatePanel initializePanel() {
 		StatsPanel panel = new StatsPanel((GameController.game().getWindow().getContentSize()));
-        turnTimer.schedule(15);
+        turnTimer.schedule(5);
         return panel;
 	}
 }

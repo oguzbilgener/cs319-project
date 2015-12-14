@@ -9,10 +9,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import java.awt.event.MouseMotionListener;
+import java.util.*;
 import java.util.List;
-import java.util.TimerTask;
 import java.util.Timer;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -56,6 +55,9 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 	}
 
 	public void drawPiece(Piece piece, Graphics g) {
+        if(piece == null) {
+            return;
+        }
 		g.setColor(piece.getColor());
 		if(piece.getPoints() == null) {
 			return;
@@ -154,7 +156,11 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
     }
 
 	public List<Piece> getPieces() {
-		return pieces;
+        List<Piece> all = new ArrayList<>();
+        all.addAll(pieces);
+        all.add(currentPiece);
+        all.addAll(incomingPieceQueue);
+		return all;
 	}
 
     public void setPieces(List<Piece> pieces) {

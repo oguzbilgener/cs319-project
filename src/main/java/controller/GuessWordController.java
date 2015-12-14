@@ -77,7 +77,8 @@ public class GuessWordController extends GameStateController implements LetterBu
         if(isGuessComplete()) {
             if(isGuessCorrect()) {
                 ((GuessPanel)getPanel()).setGuessBoxBackgroundColorPositive();
-                // TODO: cancel current timer, proceed to next step
+                getTurnTimer().cancel();
+                GameController.game().accomplishGuessing();
             }
             else {
                 ((GuessPanel)getPanel()).setGuessBoxBackgroundColorNegative();

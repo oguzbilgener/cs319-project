@@ -145,6 +145,16 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 
     public void accomplishGuessing() {
         p2pManager.accomplishGuessing();
+        session.setRoundState(GameSession.RoundState.STATS);
+    }
+
+    public void disconnect() {
+        p2pManager.close();
+    }
+
+    private void switchRoles() {
+        p2pManager.switchRoles();
+        session.setMyPlayerIsActive(!session.isMyPlayerIsActive());
     }
 
 	@Override
@@ -182,6 +192,13 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 				else if(field.name == GameSession.Field.Name.CHOSEN_WORD) {
 					beginDrawOrWatch();
 				}
+                else if(field.name == GameSession.Field.Name.MY_PLAYER_IS_ACTIVE) {
+                    System.out.println("aaaa "+p2pManager.isSelfHost());
+                    if(session.isMyPlayerIsActive()) {
+                        System.out.println("bbbbb ");
+                        chooseWord();
+                    }
+                }
 			}
 		}
 	}
@@ -293,8 +310,8 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 
     @Override
     public void onNextRoundRequested() {
-        // TODO
         System.out.println("next round requested, switch roles!!");
+        session.setMyPlayerIsActive(!session.isMyPlayerIsActive());
     }
 
     /**
@@ -357,7 +374,7 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
             failGuessing();
         }
         else if(session.getRoundState() == GameSession.RoundState.STATS && p2pManager.isSelfHost()) {
-
+            switchRoles();
         }
     }
 

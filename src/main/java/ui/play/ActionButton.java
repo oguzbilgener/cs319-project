@@ -12,7 +12,6 @@ public class ActionButton extends JButton {
 
     private ActionButton(Dimension size, String name, Color color){
         setSize(size);
-        System.out.println(size);
         setSize(size);
         this.name = name;
         this.color = color;

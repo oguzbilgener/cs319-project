@@ -1,6 +1,7 @@
 package network;
 
 import com.google.gson.Gson;
+import controller.GameController;
 import model.GameSession;
 import model.Piece;
 import model.Player;
@@ -113,6 +114,10 @@ public class P2PManager implements Observer {
 
     public void accomplishGuessing() {
         sendMessage(new Message(MessageType.WORD_GUESSED));
+    }
+
+    public void switchRoles() {
+        sendMessage(new Message(MessageType.NEXT_ROUND));
     }
 
     /**
@@ -419,7 +424,7 @@ public class P2PManager implements Observer {
                 if(field.name == GameSession.Field.Name.CHOSEN_WORD) {
                     // Tell other side that word is chosen
                     // So that they can show the related pane
-                    if(selfIsHost) {
+                    if(GameController.game().getSession().isMyPlayerIsActive()) {
                         sendMessage(new Message(MessageType.WORD_CHOSEN, field.object));
                     }
                 }
