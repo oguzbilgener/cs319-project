@@ -113,6 +113,7 @@ public class P2PManager implements Observer {
     }
 
     public void accomplishGuessing() {
+        ownPlayer.incrementScore();
         sendMessage(new Message(MessageType.WORD_GUESSED));
     }
 
@@ -267,6 +268,7 @@ public class P2PManager implements Observer {
     }
 
     private void guessAccomplished() {
+        otherPlayer.incrementScore();
         if(listener != null) {
             listener.onGuessingFinished();
         }

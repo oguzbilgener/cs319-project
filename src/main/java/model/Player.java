@@ -14,6 +14,7 @@ public class Player {
     protected String preferredAddress;
     protected String username;
     protected String password;
+    protected int score;
 
 	public Player() {
         this.addresses = new String[2];
@@ -23,6 +24,7 @@ public class Player {
         this.addresses = addresses;
         this.username = username;
         this.password = password;
+        this.score = 0;
     }
 
     public Player(String preferredAddress, String username) {
@@ -30,6 +32,7 @@ public class Player {
         this.username = username;
         this.addresses = new String[] {preferredAddress};
         this.password = "";
+        this.score = 0;
     }
 
     public static Player fromJson(String jsonStr) {
@@ -86,5 +89,13 @@ public class Player {
 
     public void setPreferredAddress(String preferredAddress) {
         this.preferredAddress = preferredAddress;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void incrementScore() {
+        score++;
     }
 }
