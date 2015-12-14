@@ -53,7 +53,7 @@ public class WatchPanel extends PlayPanel {
 	protected ActionToolbar initializeActionToolbar(Dimension size) {
 		ActionButton button1 = ActionButton.createGiveUpButton(new Dimension(size.width/2, size.height));
 		ActionButton button2 = ActionButton.createCloseButton(new Dimension(size.width/2, size.height));
-		ActionToolbar watchBar = new ActionToolbar(size, button1, this.giveUpListener, button2, this.closeListener);
+		ActionToolbar watchBar = new ActionToolbar(size, button1, button2);
 
 		return watchBar;
 	}

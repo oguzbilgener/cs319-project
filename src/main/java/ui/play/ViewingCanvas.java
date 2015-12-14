@@ -1,7 +1,5 @@
 package ui.play;
 
-import java.awt.*;
-
 /**
  * @author oguzb
  */

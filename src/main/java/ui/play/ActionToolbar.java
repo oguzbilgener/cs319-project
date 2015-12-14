@@ -11,7 +11,7 @@ public class ActionToolbar extends JPanel {
 
     private JButton button1, button2;
 
-    public ActionToolbar(Dimension panelSize, JButton button1, ActionListener listener1, JButton button2, ActionListener listener2){
+    public ActionToolbar(Dimension panelSize, JButton button1, JButton button2){
         System.out.println(panelSize);
         setSize(panelSize);
 
@@ -23,11 +23,13 @@ public class ActionToolbar extends JPanel {
         this.button1 = button1;
         this.button2 = button2;
 
-        button1.addActionListener(listener1);
         add(button1);
-
-        button2.addActionListener(listener2);
         add(button2);
 
+    }
+
+    public void setListeners(ActionListener listener1, ActionListener listener2) {
+        button1.addActionListener(listener1);
+        button2.addActionListener(listener2);
     }
 }

@@ -10,6 +10,8 @@ import java.util.TimerTask;
  */
 public class TurnTimer {
 
+    public static final int DEFAULT_TIME_LIMIT = 45;
+
     private Timer timer;
     private int count;
     private Set<TimerListener> listeners;
@@ -24,7 +26,7 @@ public class TurnTimer {
     }
 
     public void schedule() {
-        schedule(12);
+        schedule(DEFAULT_TIME_LIMIT);
     }
 
     public void schedule(int countStart) {

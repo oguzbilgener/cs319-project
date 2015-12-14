@@ -32,7 +32,7 @@ public class WaitPanel extends PlayPanel {
     protected ActionToolbar initializeActionToolbar(Dimension size) {
         ActionButton button1 = ActionButton.createGiveUpButton(new Dimension(size.width/2, size.height));
         ActionButton button2 = ActionButton.createCloseButton(new Dimension(size.width/2, size.height));
-        ActionToolbar waitBar = new ActionToolbar(size, button1, null, button2, null);
+        ActionToolbar waitBar = new ActionToolbar(size, button1, button2);
 
         return waitBar;
     }

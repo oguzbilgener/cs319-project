@@ -38,6 +38,15 @@ public class BrushPanel extends SelectorPanel {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		click(e);
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		click(e);
+	}
+
+	protected void click(MouseEvent e) {
 		BrushButton brush = (BrushButton) e.getSource();
 		int size = brush.getBrushSize();
 		GameController.game().getSession().setBrushSize(size);

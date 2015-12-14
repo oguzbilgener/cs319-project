@@ -79,18 +79,6 @@ public class Piece {
         JsonElement msg = new JsonParser().parse(jsonStr);
 		Piece piece = new Gson().fromJson(msg.getAsJsonObject().get("content"), Piece.class);
         System.out.println(piece.points);
-//        JsonArray points = msg.getAsJsonObject().get("points").getAsJsonArray();
-//
-//        List<Point> pointsList = new CopyOnWriteArrayList<>();
-//        for(JsonElement el: points) {
-//            JsonObject o = el.getAsJsonObject();
-//            Point p = new Point(o.get("x").getAsInt(), o.get("y").getAsInt());
-//            System.out.println(p);
-//            pointsList.add(p);
-//        }
-//        piece.setPoints(pointsList);
-//		ArrayList points = new Gson().fromJson(object.get("points"),  new TypeToken<List<Long>>(){}.getType());
-//		piece.setPoints(points);
         return piece;
 	}
 }

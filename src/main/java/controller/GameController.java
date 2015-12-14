@@ -132,6 +132,21 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 		}
 	}
 
+    public void finishDrawing() {
+        finishedDrawing = ((WordDrawController)activeController).getCanvas().getPieces();
+        p2pManager.finishDrawing();
+        session.setRoundState(GameSession.RoundState.WAIT);
+    }
+
+    public void failGuessing() {
+        p2pManager.failGuessing();
+        session.setRoundState(GameSession.RoundState.STATS);
+    }
+
+    public void accomplishGuessing() {
+        p2pManager.accomplishGuessing();
+    }
+
 	@Override
 	public void update(Observable observable, Object data) {
 		if(observable instanceof GameSession) {
@@ -188,7 +203,11 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 		return window;
 	}
 
-	public GameSession getSession() {
+    public GameStateController getActiveController() {
+        return activeController;
+    }
+
+    public GameSession getSession() {
 		return session;
 	}
 
@@ -285,13 +304,13 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
     @Override
     public void onLoginFailure(GameClient.ErrorType type) {
         if(activeController == null) {
-            window.showMainMenu(menuListener);
+            SwingUtilities.invokeLater(() -> window.showMainMenu(menuListener));
         }
     }
 
     @Override
     public void onSignupFailure(GameClient.ErrorType type) {
-        window.showMainMenu(menuListener);
+        SwingUtilities.invokeLater(() -> window.showMainMenu(menuListener));
     }
 
     @Override
@@ -307,14 +326,14 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
     @Override
     public void onLoginSuccess(Player player) {
         p2pManager = new P2PManager(player, this);
-        window.showMainMenu(menuListener);
         AccountStore.store(player);
+        SwingUtilities.invokeLater(() -> window.showMainMenu(menuListener));
     }
 
     @Override
     public void onSignupSuccess(Player player) {
         p2pManager = new P2PManager(player, this);
-        window.showMainMenu(menuListener);
+        SwingUtilities.invokeLater(() -> window.showMainMenu(menuListener));
         AccountStore.store(player);
     }
 
@@ -325,9 +344,6 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
 
     @Override
     public void onLoadWordsSuccess(String[] words) {
-        for (String word : words) {
-            System.out.print(word);
-        }
         session.setWordList(words);
     }
 
@@ -335,13 +351,10 @@ public class GameController implements Observer, P2PManager.P2PConnectionListene
     public void onTimeOut() {
         System.out.println("GC timeout");
         if(session.getRoundState() == GameSession.RoundState.DRAW) {
-            finishedDrawing = ((WordDrawController)activeController).getCanvas().getPieces();
-            p2pManager.finishDrawing();
-            session.setRoundState(GameSession.RoundState.WAIT);
+            finishDrawing();
         }
         else if(session.getRoundState() == GameSession.RoundState.GUESS) {
-            p2pManager.failGuessing();
-            session.setRoundState(GameSession.RoundState.STATS);
+            failGuessing();
         }
         else if(session.getRoundState() == GameSession.RoundState.STATS && p2pManager.isSelfHost()) {
 

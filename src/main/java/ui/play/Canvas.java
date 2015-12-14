@@ -12,6 +12,8 @@ import java.awt.event.MouseMotionListener;
 import java.util.List;
 import java.util.TimerTask;
 import java.util.Timer;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -25,12 +27,15 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 	protected List<Piece> pieces;
 	private Piece currentPiece;
 	private int currentPiecePosition;
+    private Queue<Piece> incomingPieceQueue;
 
 	public Canvas() {
 		pieces = new CopyOnWriteArrayList<>();
+        incomingPieceQueue = new ConcurrentLinkedQueue<>();
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		setBackground(Color.white);
+        currentPiecePosition = -1;
 	}
 
 	@Override
@@ -77,9 +82,14 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
 	}
 
     public void receivePiece(Piece piece) {
-        currentPiece = piece;
-        currentPiecePosition = 0;
-        startCurrentPieceAnimation();
+        if(currentPiecePosition == -1) {
+            currentPiece = piece;
+            currentPiecePosition = 0;
+            startCurrentPieceAnimation();
+        }
+        else {
+            incomingPieceQueue.add(piece);
+        }
     }
 
 	public void clear() {
@@ -138,7 +148,9 @@ public abstract class Canvas extends JPanel implements MouseListener, MouseMotio
     protected void onCurrentPieceAnimationEnd() {
         currentPiecePosition = -1;
         addPiece(currentPiece);
-
+        if(!incomingPieceQueue.isEmpty()) {
+            receivePiece(incomingPieceQueue.poll());
+        }
     }
 
 	public List<Piece> getPieces() {

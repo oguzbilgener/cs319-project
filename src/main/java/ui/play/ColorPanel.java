@@ -42,9 +42,20 @@ public class ColorPanel extends SelectorPanel {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		click(e);
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		click(e);
+	}
+
+	protected void click(MouseEvent e) {
 		ColorSwatch swatch = (ColorSwatch) e.getSource();
 		Color color = swatch.getColor();
 		// Delegate this event to the session
 		GameController.game().getSession().setColor(color);
 	}
+
+
 }

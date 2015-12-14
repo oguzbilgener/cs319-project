@@ -1,176 +1,85 @@
 package ui.play;
 
-import controller.GameController;
+import controller.GuessWordController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Random;
 
 /**
  * Created by asusss on 12.12.2015.
  */
 public class GuessBoxPanel extends WordPanel {
 
+    private LetterButton[] buttons;
+    private LetterSlot[] slots;
+    private String correctWord;
+    private LetterButton.LetterButtonClickListener listener;
 
-    private char[] chars;
-    private JPanel[] letters;
-    private JPanel[] guessWord;
-    private String word;
-    private MouseListener[] letListeners;
-    private int count;
-    private String guessW;
-    private JButton delete;
-
-
-    public GuessBoxPanel(Dimension size) {
+    public GuessBoxPanel(Dimension size, String word) {
         setSize(size);
         setBackground(Color.WHITE);
         setLayout(null);
 
-        word = GameController.game().getSession().getChosenWord();
-        chars = new char[10];
-        guessW = "";
-        letListeners = new MouseListener[10];
+        correctWord = word;
 
-        System.out.println(word);
-        for (int i = 0; i < word.length(); i++) {
-            chars[i] = word.charAt(i);
+        placeLetterSlots();
+        placeDeleteButton();
+    }
+
+    public void placeLetterButtons(char[] availableLetters, LetterButton.LetterButtonClickListener listener) {
+        this.listener = listener;
+        buttons = new LetterButton[GuessWordController.MAX_LENGTH];
+        int leftX = 10;
+        for(int i=0; i<GuessWordController.MAX_LENGTH;i++) {
+            LetterButton button = new LetterButton(new Dimension(29, 30), availableLetters[i], i);
+            button.setListener(listener);
+            add(button);
+            button.setBounds(leftX + i*34, 60, button.getSize().width, button.getSize().height);
+            buttons[i] = button;
         }
-        randomChars(word);
-        shuffle(chars);
-        letters = new JPanel[10];
-        int x = 10;
-        count = 0;
-        for (int i = 0; i < letters.length; i++) {
+    }
 
-            JPanel letter = new JPanel();
+    private void placeLetterSlots() {
+        slots = new LetterSlot[correctWord.length()];
+        int x = (getSize().width - (34 * correctWord.length() - 5)) / 2;
+        for(int i=0; i<correctWord.length();i++) {
+            LetterSlot slot = new LetterSlot(new Dimension(29, 30));
+            add(slot);
+            slot.setBounds(x, 5, slot.getSize().width, slot.getSize().height);
+            slots[i] = slot;
 
-            JLabel lab = new JLabel(Character.toString(chars[i]));
-            letter.add(lab);
-            letter.setBounds(x, 60, 29, 30);
-            letters[i] = letter;
-            LetterListener ml = new LetterListener(i) {
-
-                @Override
-                public void mouseClicked(MouseEvent e) {
-
-                    if (count < word.length()) {
-                        System.out.println("xxx");
-                        int index = this.getIndex();
-                        JLabel lab = new JLabel(Character.toString(chars[index]));
-                        guessW += Character.toString(chars[index]);
-                        guessWord[count].removeAll();
-                        guessWord[count].add(lab);
-                        count++;
-
-                    }
-
-                    if (count == word.length()) {
-                        // String guessW= guess.toString();
-                        System.out.println(guessW);
-                        System.out.println(word);
-                        if (guessW.equals(word)) {
-                            setBackground(Color.GREEN);
-                        } else if (!guessW.equals(word)) {
-                            setBackground(Color.RED);
-                        }
-                    }
-
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                }
-            };
-            letters[i].addMouseListener(ml);
-            add(letters[i]);
             x += 34;
         }
+    }
 
-        createDynamicLetters();
-        delete = new JButton();
-        delete.setText("D");
+    private void placeDeleteButton() {
+        JButton delete = new JButton();
+        delete.setText("\u2612");
         add(delete);
-        delete.setBounds(320,10,20,20);
-        delete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guessW="";
-                count=0;
-                setBackground(Color.white);
-                for(int i =0; i<word.length();i++)
-                {
-                    guessWord[i].removeAll();
-                    repaint();
-                }
+        delete.setBounds(330,10,20,20);
+        delete.addActionListener(e -> {
+            if(listener != null) {
+                listener.onClear();
             }
         });
-
     }
 
-    public void randomChars(String word) {
-        final String alphabet = "ABCDEFGHIJKLMNOPRSTUVWYZX";
-        final int N = alphabet.length();
-        Random r = new Random();
-
-        for (int i = 0; i < 10 - word.length(); i++) {
-            chars[word.length() + i] = alphabet.charAt(r.nextInt(N));
-        }
-
+    public void setLetterSlot(int index, char letter) {
+        System.out.println("set "+index+" "+letter);
+        slots[index].setLetter(letter);
     }
 
-    public static void shuffle(char arr[]) {
-        Random rand = new Random();
-        for (int j = 0; j < 5; j++) {
-            for (int i = 0; i < arr.length; i++) {
-                int index = rand.nextInt(10);
-                char temp = arr[i];
-                arr[i] = arr[index];
-                arr[index] = temp;
-            }
+    public void clearLetterSlot(int index) {
+        slots[index].clear();
+    }
+
+    public void disableLetterButton(int index) {
+        buttons[index].disableButton();
+    }
+
+    public void enableAllLetterButtons() {
+        for(int i=0;i<GuessWordController.MAX_LENGTH;i++) {
+            buttons[i].enableButton();
         }
     }
-
-    public void createDynamicLetters() {
-        guessWord = new JPanel[word.length()];
-
-        int x = (getWidth() - (34 * word.length() - 5)) / 2;
-        for (int i = 0; i < guessWord.length; i++) {
-            JPanel c = new JPanel();
-            JLabel lab = new JLabel("_");
-            c.add(lab);
-            c.setBounds(x, 5, 29, 30);
-            guessWord[i] = c;
-            add(guessWord[i]);
-            x += 34;
-        }
-    }
-
-    private void mouseClicked(java.awt.event.MouseEvent evt) {
-        System.out.println("ddddd");
-
-        JLabel l = (JLabel) evt.getSource();
-        JLabel lab = new JLabel(l.getText());
-        guessWord[0].removeAll();
-        guessWord[0].add(lab);
-
-
-    }
-
 }
