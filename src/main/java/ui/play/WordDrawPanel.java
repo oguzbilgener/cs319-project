@@ -40,8 +40,7 @@ public class WordDrawPanel extends PlayPanel {
 
 		ActionButton button1 = ActionButton.createCheckButton(new Dimension(size.width/2, size.height));
 		ActionButton button2 = ActionButton.createCloseButton(new Dimension(size.width/2, size.height));
-		ActionToolbar drawBar = new ActionToolbar(size, button1, button2);
-		return drawBar;
+		return new ActionToolbar(size, button1, button2);
 	}
 
 	public void setActionListeners(ActionListener checkListener, ActionListener closeListener) {

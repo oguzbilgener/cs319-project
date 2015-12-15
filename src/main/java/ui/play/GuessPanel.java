@@ -3,11 +3,14 @@ package ui.play;
 import controller.GameController;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Created by asusss on 12.12.2015.
  */
 public class GuessPanel extends PlayPanel {
+
+    private ActionToolbar guessBar;
 
     public GuessPanel(Dimension size, char[] availableLetters, LetterButton.LetterButtonClickListener letterClickListener) {
         super(size);
@@ -31,10 +34,9 @@ public class GuessPanel extends PlayPanel {
     }
 
     protected ActionToolbar initializeActionToolbar(Dimension size) {
-        ActionButton button1 = ActionButton.createCheckButton(new Dimension(size.width/2, size.height));
+        ActionButton button1 = ActionButton.createGiveUpButton(new Dimension(size.width/2, size.height));
         ActionButton button2 = ActionButton.createCloseButton(new Dimension(size.width/2, size.height));
-        ActionToolbar guessBar = new ActionToolbar(size, button1, button2);
-        return guessBar;
+        return new ActionToolbar(size, button1, button2);
     }
 
     public void setLetterSlot(int index, char letter) {
@@ -63,5 +65,9 @@ public class GuessPanel extends PlayPanel {
 
     public void setGuessBoxBackgroundColorNeutral() {
         wordBox.setBackground(Color.white);
+    }
+
+    public void setActionListeners(ActionListener checkListener, ActionListener closeListener) {
+        actionToolbar.setListeners(checkListener, closeListener);
     }
 }

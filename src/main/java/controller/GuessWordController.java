@@ -7,6 +7,7 @@ import ui.play.GuessPanel;
 import ui.play.LetterButton;
 import ui.play.PlayPanel;
 
+import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -33,7 +34,10 @@ public class GuessWordController extends GameStateController implements LetterBu
         correctWord = GameController.game().getSession().getChosenWord();
         guess = new char[correctWord.length()];
         availableLetters = shuffleCharSpace(fillCharSpaceWithRandomLetters(correctWord));
+        ActionListener giveUpListener = (event) -> GameController.game().failGuessing();
+        ActionListener closeListener = (event) -> GameController.game().disconnect();
         GuessPanel panel = new GuessPanel(GameController.game().getWindow().getContentSize(), availableLetters, this);
+        panel.setActionListeners(giveUpListener, closeListener);
         turnTimer.schedule();
         turnTimer.addListener(panel);
 		return panel;
